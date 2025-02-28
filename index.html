@@ -83,11 +83,20 @@
             };
 
             const gerarPalpiteMilhar = () => {
-                return Math.floor(Math.random() * 10000);
+                // Garantir que seja um número de 4 dígitos
+                return Math.floor(Math.random() * 9000) + 1000; // Garante um número entre 1000 e 9999
             };
 
             const gerarPalpiteDuqueDeDezena = () => {
-                return Math.floor(Math.random() * 100);
+                // Gerar duas dezenas aleatórias
+                let duque = [];
+                while (duque.length < 2) {
+                    let dezena = Math.floor(Math.random() * 100);
+                    if (!duque.includes(dezena)) {
+                        duque.push(dezena);
+                    }
+                }
+                return duque.join(" - ");
             };
 
             const gerarPalpiteTernoDeGrupo = () => {
