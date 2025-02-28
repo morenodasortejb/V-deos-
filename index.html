@@ -15,10 +15,10 @@
             background-color: #000;
             color: #fff;
             text-align: center;
-            padding: 10px;
-            font-size: 24px;
-            text-transform: uppercase;
+            padding: 15px;
+            font-size: 32px;
             font-weight: bold;
+            text-transform: uppercase;
             text-shadow: 2px 2px 4px #00ff00;
         }
         .container {
@@ -27,39 +27,38 @@
         .palpites {
             background-color: #fff;
             border-radius: 10px;
-            padding: 20px;
+            padding: 30px;
             margin: 20px 0;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .palpite {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-        .palpite h3 {
-            margin: 5px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #e0ffe0;
+            border-radius: 5px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
             font-size: 20px;
             font-weight: bold;
         }
-        .palpite span {
-            font-size: 22px;
+        .palpite .animal {
+            font-size: 24px;
             font-weight: bold;
+            color: #4caf50;
         }
-        .palpite .emoji {
-            font-size: 32px;
+        .palpite .numero {
+            font-size: 22px;
+            color: #333;
         }
         .whatsapp {
             text-align: center;
             margin-top: 30px;
-            font-size: 18px;
+            font-size: 20px;
+            font-weight: bold;
         }
         .whatsapp a {
             color: #25D366;
             text-decoration: none;
-            font-size: 22px;
-            font-weight: bold;
+            font-size: 24px;
         }
         footer {
             background-color: #000;
@@ -69,26 +68,94 @@
             font-size: 16px;
         }
     </style>
+    <script>
+        function gerarPalpites() {
+            const animais = [
+                "Avestruz", "Águia", "Burro", "Borboleta", "Cachorro", "Cabra", 
+                "Carneiro", "Camelo", "Cobra", "Coelho", "Cavalo", "Elefante", 
+                "Galo", "Gato", "Jacaré", "Leão", "Macaco", "Porco", "Pavão", 
+                "Peru", "Touro", "Tigre", "Urso", "Veado", "Vaca"
+            ];
+
+            const gerarPalpiteGrupo = () => {
+                const grupo = Math.floor(Math.random() * 25);
+                return { animal: animais[grupo], numero: grupo + 1 };
+            };
+
+            const gerarPalpiteMilhar = () => {
+                return Math.floor(Math.random() * 10000);
+            };
+
+            const gerarPalpiteDuqueDeDezena = () => {
+                return Math.floor(Math.random() * 100);
+            };
+
+            const gerarPalpiteTernoDeGrupo = () => {
+                return `${Math.floor(Math.random() * 25) + 1} - ${Math.floor(Math.random() * 25) + 1} - ${Math.floor(Math.random() * 25) + 1}`;
+            };
+
+            // Gerar 5 palpites de milhar
+            let palpitesMilhar = [];
+            for (let i = 0; i < 5; i++) {
+                palpitesMilhar.push(gerarPalpiteMilhar());
+            }
+
+            // Gerar 5 palpites de centena
+            let palpitesCentena = [];
+            for (let i = 0; i < 5; i++) {
+                palpitesCentena.push(Math.floor(Math.random() * 1000));
+            }
+
+            // Gerar 3 palpites de grupo
+            let palpitesGrupo = [];
+            for (let i = 0; i < 3; i++) {
+                let grupo = gerarPalpiteGrupo();
+                palpitesGrupo.push({ animal: grupo.animal, numero: grupo.numero });
+            }
+
+            // Gerar 1 palpite de duque de dezena
+            let palpiteDuqueDeDezena = gerarPalpiteDuqueDeDezena();
+
+            // Gerar 1 palpite de terno de grupo
+            let palpiteTernoDeGrupo = gerarPalpiteTernoDeGrupo();
+
+            return {
+                palpitesMilhar,
+                palpitesCentena,
+                palpitesGrupo,
+                palpiteDuqueDeDezena,
+                palpiteTernoDeGrupo
+            };
+        }
+
+        window.onload = function() {
+            const palpites = gerarPalpites();
+            document.getElementById('palpitesMilhar').innerHTML = palpites.palpitesMilhar.map(num => `<div class="palpite"><span class="numero">${num}</span></div>`).join('');
+            document.getElementById('palpitesCentena').innerHTML = palpites.palpitesCentena.map(num => `<div class="palpite"><span class="numero">${num}</span></div>`).join('');
+            document.getElementById('palpitesGrupo').innerHTML = palpites.palpitesGrupo.map(grupo => `<div class="palpite"><span class="animal">${grupo.animal}</span> - <span class="numero">${grupo.numero}</span></div>`).join('');
+            document.getElementById('palpiteDuqueDeDezena').innerHTML = `<div class="palpite"><span class="numero">${palpites.palpiteDuqueDeDezena}</span></div>`;
+            document.getElementById('palpiteTernoDeGrupo').innerHTML = `<div class="palpite"><span class="numero">${palpites.palpiteTernoDeGrupo}</span></div>`;
+        };
+    </script>
 </head>
 <body>
     <header>🍀 Moreno da Sorte Jb 🍀</header>
     <div class="container">
         <div class="palpites">
-            <div class="palpite">
-                <h3>Palpite de Milhar 🍀</h3>
-                <span class="emoji">💥 1234</span>
-                <p>Milhar sorteado para hoje! Aposte com sabedoria! 🍀</p>
-            </div>
-            <div class="palpite">
-                <h3>Palpite de Centena 🍀</h3>
-                <span class="emoji">💥 123</span>
-                <p>Centena para o sorteio! Boa sorte! 🍀</p>
-            </div>
-            <div class="palpite">
-                <h3>Palpite de Grupo 🍀</h3>
-                <span class="emoji">🐎 Cavalo - Número 21</span>
-                <p>Grupo do Cavalo - Número: 21! 🍀 Aposte com fé! 🍀</p>
-            </div>
+            <h2>Palpites de Milhar 🍀</h2>
+            <div id="palpitesMilhar"></div>
+
+            <h2>Palpites de Centena 🍀</h2>
+            <div id="palpitesCentena"></div>
+
+            <h2>Palpites de Grupo 🍀</h2>
+            <div id="palpitesGrupo"></div>
+
+            <h2>Palpite de Duque de Dezena 🍀</h2>
+            <div id="palpiteDuqueDeDezena"></div>
+
+            <h2>Palpite de Terno de Grupo 🍀</h2>
+            <div id="palpiteTernoDeGrupo"></div>
         </div>
 
         <div class="whatsapp">
