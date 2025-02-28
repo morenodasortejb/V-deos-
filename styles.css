@@ -1,0 +1,102 @@
+/* Reset de estilo */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo do cabeçalho */
+header {
+    background-color: #000;
+    color: #00FF00; /* Efeito verde */
+    text-align: center;
+    padding: 20px 0;
+}
+
+#logo {
+    font-size: 3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    animation: grow 2s infinite;
+}
+
+/* Animação para o efeito verde */
+@keyframes grow {
+    0% {
+        color: #00FF00;
+    }
+    50% {
+        color: #FFFFFF;
+    }
+    100% {
+        color: #00FF00;
+    }
+}
+
+/* Estilos do container */
+.container {
+    display: flex;
+    padding: 20px;
+}
+
+/* Menu lateral */
+.sidebar {
+    width: 250px;
+    background-color: #1a1a1a;
+    color: white;
+    padding: 20px;
+}
+
+.sidebar nav ul {
+    list-style-type: none;
+}
+
+.sidebar nav ul li {
+    margin: 10px 0;
+}
+
+.sidebar nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+.sidebar nav ul li a:hover {
+    color: #00FF00;
+}
+
+/* Conteúdo principal */
+.main-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+.main-content h2 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.main-content p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+/* Estilo da seção de propaganda */
+#propaganda {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Rodapé */
+footer {
+    background-color: #000;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
