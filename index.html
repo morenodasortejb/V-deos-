@@ -83,17 +83,20 @@
             };
 
             const gerarPalpiteMilhar = () => {
-                // Garantir que seja um número de 4 dígitos
-                return Math.floor(Math.random() * 9000) + 1000; // Garante um número entre 1000 e 9999
+                return Math.floor(Math.random() * 9000) + 1000; // Número entre 1000 e 9999
+            };
+
+            const gerarPalpiteCentena = () => {
+                let centena = Math.floor(Math.random() * 1000); // Número entre 0 e 999
+                return centena.toString().padStart(3, '0'); // Garante 3 dígitos
             };
 
             const gerarPalpiteDuqueDeDezena = () => {
-                // Gerar duas dezenas aleatórias
                 let duque = [];
                 while (duque.length < 2) {
                     let dezena = Math.floor(Math.random() * 100);
                     if (!duque.includes(dezena)) {
-                        duque.push(dezena);
+                        duque.push(dezena.toString().padStart(2, '0'));
                     }
                 }
                 return duque.join(" - ");
@@ -103,29 +106,23 @@
                 return `${Math.floor(Math.random() * 25) + 1} - ${Math.floor(Math.random() * 25) + 1} - ${Math.floor(Math.random() * 25) + 1}`;
             };
 
-            // Gerar 5 palpites de milhar
             let palpitesMilhar = [];
             for (let i = 0; i < 5; i++) {
                 palpitesMilhar.push(gerarPalpiteMilhar());
             }
 
-            // Gerar 5 palpites de centena
             let palpitesCentena = [];
             for (let i = 0; i < 5; i++) {
-                palpitesCentena.push(Math.floor(Math.random() * 1000));
+                palpitesCentena.push(gerarPalpiteCentena());
             }
 
-            // Gerar 3 palpites de grupo
             let palpitesGrupo = [];
             for (let i = 0; i < 3; i++) {
                 let grupo = gerarPalpiteGrupo();
                 palpitesGrupo.push({ animal: grupo.animal, numero: grupo.numero });
             }
 
-            // Gerar 1 palpite de duque de dezena
             let palpiteDuqueDeDezena = gerarPalpiteDuqueDeDezena();
-
-            // Gerar 1 palpite de terno de grupo
             let palpiteTernoDeGrupo = gerarPalpiteTernoDeGrupo();
 
             return {
