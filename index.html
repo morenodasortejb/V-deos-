@@ -3,141 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moreno da Sorte Jb - Palpites</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #ffffff;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
-
-        header {
-            background-color: #28a745;
-            color: #fff;
-            padding: 15px;
-            font-size: 1.5em;
-        }
-
-        .container {
-            padding: 20px;
-        }
-
-        .contact {
-            font-size: 1.2em;
-            margin: 10px 0;
-        }
-
-        .palmite {
-            display: inline-block;
-            background-color: #28a745;
-            color: white;
-            margin: 5px;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 1.5em;
-        }
-
-        .group {
-            display: inline-block;
-            background-color: #ffcc00;
-            color: white;
-            margin: 5px;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 1.5em;
-        }
-
-        .banca-info {
-            background-color: #f8f9fa;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 8px;
-        }
-
-        .banca-info h2 {
-            color: #28a745;
-            font-size: 1.8em;
-        }
-
-        footer {
-            background-color: #28a745;
-            color: #fff;
-            padding: 10px;
-            font-size: 1em;
-        }
-    </style>
+    <title>Moreno da Sorte Jb</title>
+    <link rel="stylesheet" href="css/styles.css"> <!-- Link para o arquivo CSS -->
 </head>
 <body>
+    <header>
+        <div class="header-container">
+            <h1 id="logo">Moreno da Sorte Jb</h1>
+        </div>
+    </header>
 
-<header>
-    Moreno da Sorte Jb - Palpites
-</header>
+    <div class="container">
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="#palpites">Palpites</a></li>
+                    <li><a href="#resultados">Resultados</a></li>
+                    <li><a href="#redes-sociais">Redes Sociais</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-<div class="container">
-    <div class="contact">
-        <strong>Contato do WhatsApp:</strong> 83 99102-3576
+        <main class="main-content">
+            <section id="palpites">
+                <h2>Palpites</h2>
+                <p>Confira os palpites automáticos para o Jogo do Bicho. Cada grupo está associado ao número da milhar.</p>
+                
+                <div class="palpite">
+                    <h3>Grupo 1: Veado</h3>
+                    <p>Palpite: 24</p>
+                </div>
+                <div class="palpite">
+                    <h3>Grupo 2: Águia</h3>
+                    <p>Palpite: 13</p>
+                </div>
+                <div class="palpite">
+                    <h3>Grupo 3: Burro</h3>
+                    <p>Palpite: 17</p>
+                </div>
+                <div class="palpite">
+                    <h3>Grupo 4: Cacatua</h3>
+                    <p>Palpite: 04</p>
+                </div>
+                <div class="palpite">
+                    <h3>Grupo 5: Carneiro</h3>
+                    <p>Palpite: 35</p>
+                </div>
+                <!-- Você pode adicionar mais grupos e palpites aqui, conforme necessário -->
+            </section>
+
+            <section id="resultados">
+                <h2>Resultados</h2>
+                <p>Resultados atualizados automaticamente com o nome do animal correspondente à milhar.</p>
+            </section>
+
+            <section id="redes-sociais">
+                <h2>Redes Sociais</h2>
+                <p>Instagram, TikTok, YouTube e Kwai - @MorenoDaSorteJb</p>
+            </section>
+
+            <section id="propaganda">
+                <h2>Baixe nosso Aplicativo</h2>
+                <p>Baixe o aplicativo para jogar com alta confiabilidade, com cotação de R$8000 na milhar.</p>
+            </section>
+        </main>
     </div>
 
-    <h2>Palpites Gerados</h2>
-
-    <div class="palpites">
-        <!-- Exemplo de palpites de milhar, centena e grupo -->
-        <div class="palmite">Milhar: 1234 (Águia)</div>
-        <div class="palmite">Centena: 456</div>
-        <div class="palmite">Milhar: 5678 (Leão)</div>
-        <div class="palmite">Centena: 890</div>
-        <div class="palmite">Milhar: 2345 (Elefante)</div>
-        <div class="palmite">Centena: 678</div>
-        <div class="palmite">Milhar: 7890 (Cavalo)</div>
-        <div class="palmite">Centena: 234</div>
-
-        <div class="group">Grupo: Águia</div>
-        <div class="group">Grupo: Leão</div>
-    </div>
-
-    <div class="banca-info">
-        <h2>Banca Águia Oficial</h2>
-        <p>Oferece <strong>30% de bônus</strong> para novos cadastros! Aproveite a promoção e faça seu cadastro na Águia Oficial agora!</p>
-    </div>
-</div>
-
-<footer>
-    Moreno da Sorte Jb © 2025
-</footer>
-
-<script>
-    function generatePalpites() {
-        const animais = ['Águia', 'Leão', 'Elefante', 'Cavalo', 'Tigre', 'Cachorro', 'Cobra', 'Jacaré'];
-        const grupos = ['Águia', 'Leão', 'Elefante', 'Cavalo', 'Tigre'];
-        const milharCentena = () => {
-            return Math.floor(Math.random() * 9000) + 1000;
-        }
-
-        // Gerar 8 palpites de milhar e centena
-        const milhares = [];
-        for (let i = 0; i < 8; i++) {
-            const milhar = milharCentena();
-            const grupo = animais[Math.floor(Math.random() * animais.length)];
-            milhares.push(`<div class="palmite">Milhar: ${milhar} (${grupo})</div>`);
-        }
-
-        // Gerar 2 palpites de grupo
-        const gruposGerados = [];
-        for (let i = 0; i < 2; i++) {
-            const grupo = grupos[Math.floor(Math.random() * grupos.length)];
-            gruposGerados.push(`<div class="group">Grupo: ${grupo}</div>`);
-        }
-
-        // Atualizar a página com os novos palpites
-        document.querySelector('.palpites').innerHTML = [...milhares, ...gruposGerados].join('');
-    }
-
-    // Gerar palpites ao carregar a página
-    window.onload = generatePalpites;
-</script>
-
+    <footer>
+        <p>Contato: morenodasortejb@gmail.com | WhatsApp: (83) 99102-3576</p>
+    </footer>
 </body>
 </html>
