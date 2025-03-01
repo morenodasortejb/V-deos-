@@ -10,6 +10,7 @@
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
+            transition: background 1s ease;
         }
         header {
             background-color: #000;
@@ -19,7 +20,6 @@
             font-size: 32px;
             font-weight: bold;
             text-transform: uppercase;
-            text-shadow: 2px 2px 4px #00ff00;
         }
         .container {
             padding: 20px;
@@ -165,38 +165,43 @@
                 return Math.floor(Math.random() * (max - min + 1)) + min;
             }
 
-            // Gerar 10 milhares com centena
+            // Gerar 10 milhares com centena (sem "centena" e somente nome e emoji do animal)
             let milhares = [];
             for (let i = 0; i < 10; i++) {
                 milhares.push({
                     numero: gerarNumero(1000, 9999),
-                    centena: gerarNumero(0, 9),
                     animal: animais[gerarNumero(0, animais.length - 1)]
                 });
             }
 
-            // Gerar 5 grupos de números
+            // Gerar 5 grupos (agora de 01 a 25)
             let grupos = [];
             for (let i = 0; i < 5; i++) {
+                let grupo = gerarNumero(1, 25).toString().padStart(2, '0');
                 grupos.push({
-                    numero: gerarNumero(10, 99),
-                    animal: animais[gerarNumero(0, animais.length - 1)]
+                    numero: grupo,
+                    animal: animais[parseInt(grupo) - 1]  // Usa o número para mapear o animal correspondente
                 });
             }
 
-            // Gerar 3 duques de dezenas
+            // Gerar 3 duques de dezenas (Formato 25-12)
             let duques = [];
             for (let i = 0; i < 3; i++) {
-                duques.push(gerarNumero(10, 99));
+                let dezena1 = gerarNumero(10, 99);
+                let dezena2 = gerarNumero(10, 99);
+                duques.push(`${dezena1}-${dezena2}`);
             }
 
-            // Gerar 2 ternos de grupos
+            // Gerar 2 ternos de grupo (formados por números de 01 a 25)
             let ternos = [];
             for (let i = 0; i < 2; i++) {
+                let grupo1 = gerarNumero(1, 25).toString().padStart(2, '0');
+                let grupo2 = gerarNumero(1, 25).toString().padStart(2, '0');
+                let grupo3 = gerarNumero(1, 25).toString().padStart(2, '0');
                 ternos.push({
-                    grupo: gerarNumero(10, 99),
-                    grupo2: gerarNumero(10, 99),
-                    grupo3: gerarNumero(10, 99)
+                    grupo1: grupo1,
+                    grupo2: grupo2,
+                    grupo3: grupo3
                 });
             }
 
@@ -205,8 +210,8 @@
 
             resultadoElement.innerHTML = `
                 <div class="resultado">
-                    <h3>10 Milhares com Centena:</h3>
-                    ${milhares.map(m => `<p>${m.numero} - Centena: ${m.centena} - ${m.animal}</p>`).join('')}
+                    <h3>10 Milhares:</h3>
+                    ${milhares.map(m => `<p>${m.numero} - ${m.animal}</p>`).join('')}
                 </div>
                 <div class="resultado">
                     <h3>5 Grupos:</h3>
@@ -218,13 +223,49 @@
                 </div>
                 <div class="resultado">
                     <h3>2 Ternos de Grupo:</h3>
-                    ${ternos.map(t => `<p>${t.grupo} - ${t.grupo2} - ${t.grupo3}</p>`).join('')}
+                    ${ternos.map(t => `<p>${t.grupo1} - ${t.grupo2} - ${t.grupo3}</p>`).join('')}
                 </div>
             `;
         }
 
-        // Chama a função para gerar palpites ao carregar a página
-        gerarPalpites();
+        // Função para verificar e gerar palpite apenas a cada 6 horas
+        function verificarEGerarPalpite() {
+            const ultimaGeracao = localStorage.getItem('ultimaGeracao');
+            const agora = new Date().getTime();
+            const seisHorasEmMs = 6 * 60 * 60 * 1000; // 6 horas em milissegundos
+
+            if (!ultimaGeracao || (agora - ultimaGeracao) >= seisHorasEmMs) {
+                gerarPalpites();
+                localStorage.setItem('ultimaGeracao', agora);
+            } else {
+                console.log("Ainda não passaram 6 horas. Aguarde.");
+            }
+        }
+
+        // Função para alterar o fundo da página a cada 6 horas
+        function alterarFundo() {
+            const imagens = [
+                'https://www.w3schools.com/w3images/mountains.jpg',
+                'https://www.w3schools.com/w3images/lights.jpg',
+                'https://www.w3schools.com/w3images/forest.jpg',
+                'https://www.w3schools.com/w3images/fjords.jpg'
+            ];
+
+            const ultimaTroca = localStorage.getItem('ultimaTroca');
+            const agora = new Date().getTime();
+            const seisHorasEmMs = 6 * 60 * 60 * 1000; // 6 horas em milissegundos
+
+            if (!ultimaTroca || (agora - ultimaTroca) >= seisHorasEmMs) {
+                const imagemAleatoria = imagens[gerarNumero(0, imagens.length - 1)];
+                document.body.style.backgroundImage = `url(${imagemAleatoria})`;
+                document.body.style.backgroundSize = 'cover';
+                localStorage.setItem('ultimaTroca', agora);
+            }
+        }
+
+        // Chama a função para verificar e gerar palpites ao carregar a página
+        verificarEGerarPalpite();
+        alterarFundo();
     </script>
 </body>
 </html>
