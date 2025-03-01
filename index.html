@@ -10,7 +10,6 @@
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
-            transition: background 1s ease;
         }
         header {
             background-color: #000;
@@ -23,7 +22,6 @@
         }
         .container {
             padding: 20px;
-            text-align: center;
         }
         .palpites {
             background-color: #fff;
@@ -32,26 +30,8 @@
             margin: 20px 0;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .resultados {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .resultado {
-            background: #f8f8f8;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: left;
-        }
-        .resultado h3 {
-            font-size: 20px;
-            color: #333;
-        }
-        .resultado p {
-            font-size: 18px;
-            color: #555;
+        .palpites div {
+            margin-bottom: 10px;
         }
         .menu-icon {
             position: fixed;
@@ -127,9 +107,9 @@
     </div>
     
     <div class="container">
-        <div class="palpites">
+        <div class="palpites" id="palpites">
             <h2>Palpites de Hoje 🍀</h2>
-            <div id="palpiteResultados" class="resultados"></div>
+            <!-- Palpites gerados serão exibidos aqui -->
         </div>
         <div class="play-button" onclick="openGameWindow()">🎲 APERTE AQUI PARA JOGAR AGORA 🎲</div>
     </div>
@@ -138,139 +118,142 @@
         <span class="close-btn" onclick="closeGameWindow()">✖</span>
         <iframe src="https://app.aguiaoficial.com/pr/ZXbjMC6Q" width="100%" height="100%" frameborder="0"></iframe>
     </div>
-    
+
     <script>
-        function toggleMenu() {
-            let menu = document.getElementById("floatingMenu");
-            menu.style.display = menu.style.display === "block" ? "none" : "block";
-        }
-        
-        function openGameWindow() {
-            document.getElementById("gameWindow").style.display = "block";
-        }
-        
-        function closeGameWindow() {
-            document.getElementById("gameWindow").style.display = "none";
-        }
+        const animais = [
+            { nome: "Avestruz", emoji: "🦢" },
+            { nome: "Águia", emoji: "🦅" },
+            { nome: "Burro", emoji: "🐴" },
+            { nome: "Borboleta", emoji: "🦋" },
+            { nome: "Cachorro", emoji: "🐕" },
+            { nome: "Cabra", emoji: "🐐" },
+            { nome: "Carneiro", emoji: "🐏" },
+            { nome: "Camelo", emoji: "🐫" },
+            { nome: "Cobra", emoji: "🐍" },
+            { nome: "Coelho", emoji: "🐇" },
+            { nome: "Cavalo", emoji: "🐎" },
+            { nome: "Elefante", emoji: "🐘" },
+            { nome: "Galo", emoji: "🐔" },
+            { nome: "Gato", emoji: "🐱" },
+            { nome: "Jacaré", emoji: "🐊" },
+            { nome: "Leão", emoji: "🦁" },
+            { nome: "Macaco", emoji: "🐒" },
+            { nome: "Porco", emoji: "🐖" },
+            { nome: "Pavão", emoji: "🦚" },
+            { nome: "Peru", emoji: "🦃" },
+            { nome: "Touro", emoji: "🐂" },
+            { nome: "Tigre", emoji: "🐯" },
+            { nome: "Urso", emoji: "🐻" },
+            { nome: "Veado", emoji: "🦌" },
+            { nome: "Vaca", emoji: "🐄" }
+        ];
 
-        // Função para gerar palpites
-        function gerarPalpites() {
-            const animais = [
-                'Avestruz 🦢', 'Águia 🦅', 'Burro 🐴', 'Borboleta 🦋', 'Cachorro 🐕', 'Cabra 🐐', 'Carneiro 🐑', 'Camelo 🦙', 'Cobra 🐍', 'Coelho 🐇',
-                'Cavalo 🐎', 'Elefante 🐘', 'Galo 🐓', 'Gato 🐈', 'Jacaré 🐊', 'Leão 🦁', 'Macaco 🐒', 'Porco 🐖', 'Pavão 🦚', 'Peru 🦃', 'Touro 🐂',
-                'Tigre 🐅', 'Urso 🐻', 'Veado 🦌', 'Vaca 🐄'
-            ];
+        function gerarPalpite() {
+            const palpites = {
+                milhares: [],
+                grupos: [],
+                duques: [],
+                ternos: []
+            };
 
-            function gerarNumero(min, max) {
-                return Math.floor(Math.random() * (max - min + 1)) + min;
-            }
-
-            // Gerar 10 milhares com centena (sem "centena" e somente nome e emoji do animal)
-            let milhares = [];
+            // Gerando 10 palpites de milhar
             for (let i = 0; i < 10; i++) {
-                milhares.push({
-                    numero: gerarNumero(1000, 9999),
-                    animal: animais[gerarNumero(0, animais.length - 1)]
+                let milhar = Math.floor(Math.random() * 1000) + 1000;
+                let centena = Math.floor(Math.random() * 10);
+                palpites.milhares.push({
+                    milhar: `${milhar}`,
+                    animal: animais[Math.floor(Math.random() * 25)]
                 });
             }
 
-            // Gerar 5 grupos (agora de 01 a 25)
-            let grupos = [];
+            // Gerando 5 palpites de grupo
             for (let i = 0; i < 5; i++) {
-                let grupo = gerarNumero(1, 25).toString().padStart(2, '0');
-                grupos.push({
-                    numero: grupo,
-                    animal: animais[parseInt(grupo) - 1]  // Usa o número para mapear o animal correspondente
+                let grupo = Math.floor(Math.random() * 25) + 1;
+                palpites.grupos.push({
+                    grupo: grupo,
+                    animal: animais[grupo - 1]
                 });
             }
 
-            // Gerar 3 duques de dezenas (Formato 25-12)
-            let duques = [];
+            // Gerando 3 duques de dezena
             for (let i = 0; i < 3; i++) {
-                let dezena1 = gerarNumero(10, 99);
-                let dezena2 = gerarNumero(10, 99);
-                duques.push(`${dezena1}-${dezena2}`);
+                let duque = `${Math.floor(Math.random() * 100) + 10}-${Math.floor(Math.random() * 100) + 10}`;
+                palpites.duques.push(duque);
             }
 
-            // Gerar 2 ternos de grupo (formados por números de 01 a 25)
-            let ternos = [];
+            // Gerando 2 ternos de grupos
             for (let i = 0; i < 2; i++) {
-                let grupo1 = gerarNumero(1, 25).toString().padStart(2, '0');
-                let grupo2 = gerarNumero(1, 25).toString().padStart(2, '0');
-                let grupo3 = gerarNumero(1, 25).toString().padStart(2, '0');
-                ternos.push({
-                    grupo1: grupo1,
-                    grupo2: grupo2,
-                    grupo3: grupo3
+                let terno = `${Math.floor(Math.random() * 25) + 1}-${Math.floor(Math.random() * 25) + 1}-${Math.floor(Math.random() * 25) + 1}`;
+                palpites.ternos.push(terno);
+            }
+
+            return palpites;
+        }
+
+        function salvarPalpite(palpites) {
+            const dataHoraAtual = new Date().getTime();
+            const tempoPassado = localStorage.getItem('tempoUltimaAtualizacao') || 0;
+
+            if (dataHoraAtual - tempoPassado > 6 * 60 * 60 * 1000 || !localStorage.getItem('palpites')) {
+                localStorage.setItem('palpites', JSON.stringify(palpites));
+                localStorage.setItem('tempoUltimaAtualizacao', dataHoraAtual);
+            }
+        }
+
+        function carregarPalpites() {
+            const palpites = JSON.parse(localStorage.getItem('palpites'));
+            if (palpites) {
+                const palpitesDiv = document.getElementById('palpites');
+                let html = `
+                    <h3>Palpites de Milhar com Centena:</h3>
+                    <ul>
+                `;
+                palpites.milhares.forEach(item => {
+                    html += `<li>${item.milhar} - ${item.animal.nome} ${item.animal.emoji}</li>`;
                 });
-            }
 
-            // Exibir os resultados na página
-            const resultadoElement = document.getElementById("palpiteResultados");
+                html += `</ul><h3>Palpites de Grupos:</h3><ul>`;
+                palpites.grupos.forEach(item => {
+                    html += `<li>${item.grupo} - ${item.animal.nome} ${item.animal.emoji}</li>`;
+                });
 
-            resultadoElement.innerHTML = `
-                <div class="resultado">
-                    <h3>10 Milhares:</h3>
-                    ${milhares.map(m => `<p>${m.numero} - ${m.animal}</p>`).join('')}
-                </div>
-                <div class="resultado">
-                    <h3>5 Grupos:</h3>
-                    ${grupos.map(g => `<p>${g.numero} - ${g.animal}</p>`).join('')}
-                </div>
-                <div class="resultado">
-                    <h3>3 Duques de Dezena:</h3>
-                    ${duques.map(d => `<p>${d}</p>`).join('')}
-                </div>
-                <div class="resultado">
-                    <h3>2 Ternos de Grupo:</h3>
-                    ${ternos.map(t => `<p>${t.grupo1} - ${t.grupo2} - ${t.grupo3}</p>`).join('')}
-                </div>
-            `;
+                html += `</ul><h3>Duques:</h3><ul>`;
+                palpites.duques.forEach(item => {
+                    html += `<li>${item}</li>`;
+                });
 
-            // Armazenar palpites no localStorage para persistir entre os carregamentos
-            localStorage.setItem('palpites', JSON.stringify({
-                milhares, grupos, duques, ternos
-            }));
-            localStorage.setItem('ultimaGeracao', new Date().getTime());  // Armazenar hora da última geração
-        }
+                html += `</ul><h3>Ternos:</h3><ul>`;
+                palpites.ternos.forEach(item => {
+                    html += `<li>${item}</li>`;
+                });
 
-        // Função para verificar se os palpites devem ser gerados ou não
-        function verificarEGerarPalpite() {
-            const ultimaGeracao = localStorage.getItem('ultimaGeracao');
-            const agora = new Date().getTime();
-            
-            // Se os palpites não existem ou passaram 6 horas
-            if (!ultimaGeracao || (agora - ultimaGeracao) > 6 * 60 * 60 * 1000) {
-                gerarPalpites();
-            } else {
-                // Caso contrário, carregar os palpites salvos
-                const palpitesSalvos = JSON.parse(localStorage.getItem('palpites'));
-                if (palpitesSalvos) {
-                    const resultadoElement = document.getElementById("palpiteResultados");
-                    resultadoElement.innerHTML = `
-                        <div class="resultado">
-                            <h3>10 Milhares:</h3>
-                            ${palpitesSalvos.milhares.map(m => `<p>${m.numero} - ${m.animal}</p>`).join('')}
-                        </div>
-                        <div class="resultado">
-                            <h3>5 Grupos:</h3>
-                            ${palpitesSalvos.grupos.map(g => `<p>${g.numero} - ${g.animal}</p>`).join('')}
-                        </div>
-                        <div class="resultado">
-                            <h3>3 Duques de Dezena:</h3>
-                            ${palpitesSalvos.duques.map(d => `<p>${d}</p>`).join('')}
-                        </div>
-                        <div class="resultado">
-                            <h3>2 Ternos de Grupo:</h3>
-                            ${palpitesSalvos.ternos.map(t => `<p>${t.grupo1} - ${t.grupo2} - ${t.grupo3}</p>`).join('')}
-                        </div>
-                    `;
-                }
+                html += `</ul>`;
+                palpitesDiv.innerHTML = html;
             }
         }
 
-        // Ao carregar a página, verificar e gerar palpites se necessário
-        window.onload = verificarEGerarPalpite;
+        // Funções do menu flutuante
+        function toggleMenu() {
+            const menu = document.getElementById('floatingMenu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function openGameWindow() {
+            const gameWindow = document.getElementById('gameWindow');
+            gameWindow.style.display = 'block';
+        }
+
+        function closeGameWindow() {
+            const gameWindow = document.getElementById('gameWindow');
+            gameWindow.style.display = 'none';
+        }
+
+        // Função inicial para gerar e exibir os palpites
+        document.addEventListener('DOMContentLoaded', () => {
+            const palpites = gerarPalpite();
+            salvarPalpite(palpites);
+            carregarPalpites();
+        });
     </script>
 </body>
 </html>
