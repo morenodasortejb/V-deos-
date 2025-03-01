@@ -226,9 +226,14 @@
                     ${ternos.map(t => `<p>${t.grupo1} - ${t.grupo2} - ${t.grupo3}</p>`).join('')}
                 </div>
             `;
+
+            // Armazenar palpites no localStorage para persistir entre os carregamentos
+            localStorage.setItem('palpites', JSON.stringify({
+                milhares, grupos, duques, ternos
+            }));
         }
 
-        // Função para verificar e gerar palpite apenas a cada 6 horas
+        // Função para verificar se os palpites devem ser gerados ou não
         function verificarEGerarPalpite() {
             const ultimaGeracao = localStorage.getItem('ultimaGeracao');
             const agora = new Date().getTime();
@@ -239,33 +244,34 @@
                 localStorage.setItem('ultimaGeracao', agora);
             } else {
                 console.log("Ainda não passaram 6 horas. Aguarde.");
+                // Carregar os palpites armazenados no localStorage
+                const palpites = JSON.parse(localStorage.getItem('palpites'));
+                if (palpites) {
+                    const resultadoElement = document.getElementById("palpiteResultados");
+                    resultadoElement.innerHTML = `
+                        <div class="resultado">
+                            <h3>10 Milhares:</h3>
+                            ${palpites.milhares.map(m => `<p>${m.numero} - ${m.animal}</p>`).join('')}
+                        </div>
+                        <div class="resultado">
+                            <h3>5 Grupos:</h3>
+                            ${palpites.grupos.map(g => `<p>${g.numero} - ${g.animal}</p>`).join('')}
+                        </div>
+                        <div class="resultado">
+                            <h3>3 Duques de Dezena:</h3>
+                            ${palpites.duques.map(d => `<p>${d}</p>`).join('')}
+                        </div>
+                        <div class="resultado">
+                            <h3>2 Ternos de Grupo:</h3>
+                            ${palpites.ternos.map(t => `<p>${t.grupo1} - ${t.grupo2} - ${t.grupo3}</p>`).join('')}
+                        </div>
+                    `;
+                }
             }
         }
 
-        // Função para alterar o fundo da página a cada 6 horas
-        function alterarFundo() {
-            const imagens = [
-                'https://www.w3schools.com/w3images/mountains.jpg',
-                'https://www.w3schools.com/w3images/lights.jpg',
-                'https://www.w3schools.com/w3images/forest.jpg',
-                'https://www.w3schools.com/w3images/fjords.jpg'
-            ];
-
-            const ultimaTroca = localStorage.getItem('ultimaTroca');
-            const agora = new Date().getTime();
-            const seisHorasEmMs = 6 * 60 * 60 * 1000; // 6 horas em milissegundos
-
-            if (!ultimaTroca || (agora - ultimaTroca) >= seisHorasEmMs) {
-                const imagemAleatoria = imagens[gerarNumero(0, imagens.length - 1)];
-                document.body.style.backgroundImage = `url(${imagemAleatoria})`;
-                document.body.style.backgroundSize = 'cover';
-                localStorage.setItem('ultimaTroca', agora);
-            }
-        }
-
-        // Chama a função para verificar e gerar palpites ao carregar a página
-        verificarEGerarPalpite();
-        alterarFundo();
+        // Ao carregar a página, verificar e gerar palpites se necessário
+        window.onload = verificarEGerarPalpite;
     </script>
 </body>
 </html>
