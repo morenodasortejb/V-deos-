@@ -20,111 +20,116 @@
             font-weight: bold;
             text-transform: uppercase;
             text-shadow: 2px 2px 4px #00ff00;
-            position: relative;
-        }
-        .menu-icon {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 30px;
-            cursor: pointer;
-        }
-        .menu {
-            display: none;
-            position: absolute;
-            top: 50px;
-            right: 20px;
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            padding: 10px;
-        }
-        .menu a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
-            color: black;
-        }
-        .menu a:hover {
-            background-color: #ddd;
         }
         .container {
             padding: 20px;
         }
-        .btn-jogar {
-            display: block;
-            width: 100%;
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 15px;
-            font-size: 20px;
-            font-weight: bold;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
+        .palpites {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .overlay {
+        .menu-icon {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            font-size: 30px;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .floating-menu {
+            position: fixed;
+            top: 50px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 10px;
+            display: none;
+            text-align: center;
+        }
+        .floating-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+        }
+        .floating-window {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
-        .popup {
+            top: 10%;
+            left: 10%;
+            width: 80%;
+            height: 80%;
             background: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            position: relative;
+            z-index: 1000;
         }
         .close-btn {
             position: absolute;
             top: 10px;
-            right: 10px;
+            right: 15px;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .play-button {
+            display: block;
+            margin: 20px auto;
+            padding: 15px;
+            background: green;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            cursor: pointer;
+            width: 80%;
+            text-transform: uppercase;
+            font-weight: bold;
         }
     </style>
-    <script>
-        function toggleMenu() {
-            let menu = document.getElementById("menu");
-            menu.style.display = menu.style.display === "block" ? "none" : "block";
-        }
-        function abrirPopup() {
-            document.getElementById("overlay").style.display = "flex";
-        }
-        function fecharPopup() {
-            document.getElementById("overlay").style.display = "none";
-        }
-    </script>
 </head>
 <body>
-    <header>
-        🍀 Moreno da Sorte Jb 🍀
-        <div class="menu-icon" onclick="toggleMenu()">☰</div>
-        <div id="menu" class="menu">
-            <a href="https://api.whatsapp.com/send?phone=%205583991023576&text=Ol%C3%A1%2C+Moreno+da+Sorte.+Fiquei+interessado+pelo+aplicativo+e+o+grupo+de+palpites." target="_blank">📞 Fale comigo</a>
-            <a href="#">🎥 Kwai: Moreno da Sorte Jb</a>
-        </div>
-    </header>
-    <div class="container">
-        <button class="btn-jogar" onclick="abrirPopup()">🎰 APERTE AQUI PARA JOGAR AGORA 🎰</button>
-        <div id="overlay" class="overlay">
-            <div class="popup">
-                <span class="close-btn" onclick="fecharPopup()">❌</span>
-                <iframe src="https://app.aguiaoficial.com/pr/ZXbjMC6Q" width="300" height="500"></iframe>
-            </div>
-        </div>
+    <header>🍀 Moreno da Sorte Jb 🍀</header>
+    
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    
+    <div class="floating-menu" id="floatingMenu">
+        <a href="https://api.whatsapp.com/send?phone=5583991023576&text=Ol%C3%A1%2C+Moreno+da+Sorte" target="_blank">📱 Fale Comigo</a>
+        <a href="#">📺 Kwai: Moreno da Sorte Jb</a>
     </div>
-    <footer>
-        <p>✨ www.morenodasortejb.com.br - Todos os direitos reservados ✨</p>
-    </footer>
+    
+    <div class="container">
+        <div class="palpites">
+            <h2>Palpites de Hoje 🍀</h2>
+            <p>Em breve, mais palpites atualizados!</p>
+        </div>
+        <div class="play-button" onclick="openGameWindow()">🎲 APERTE AQUI PARA JOGAR AGORA 🎲</div>
+    </div>
+    
+    <div class="floating-window" id="gameWindow">
+        <span class="close-btn" onclick="closeGameWindow()">✖</span>
+        <iframe src="https://app.aguiaoficial.com/pr/ZXbjMC6Q" width="100%" height="100%" frameborder="0"></iframe>
+    </div>
+    
+    <script>
+        function toggleMenu() {
+            let menu = document.getElementById("floatingMenu");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+        
+        function openGameWindow() {
+            document.getElementById("gameWindow").style.display = "block";
+        }
+        
+        function closeGameWindow() {
+            document.getElementById("gameWindow").style.display = "none";
+        }
+    </script>
 </body>
 </html>
