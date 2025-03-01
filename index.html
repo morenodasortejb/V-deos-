@@ -238,32 +238,31 @@
         function verificarEGerarPalpite() {
             const ultimaGeracao = localStorage.getItem('ultimaGeracao');
             const agora = new Date().getTime();
-            const seisHorasEmMs = 6 * 60 * 60 * 1000; // 6 horas em milissegundos
-
-            if (!ultimaGeracao || (agora - ultimaGeracao) >= seisHorasEmMs) {
-                gerarPalpites();  // Gerar novo palpite
+            
+            // Se os palpites não existem ou passaram 6 horas
+            if (!ultimaGeracao || (agora - ultimaGeracao) > 6 * 60 * 60 * 1000) {
+                gerarPalpites();
             } else {
-                // Carregar palpites existentes
-                const palpites = JSON.parse(localStorage.getItem('palpites'));
-                if (palpites) {
+                // Caso contrário, carregar os palpites salvos
+                const palpitesSalvos = JSON.parse(localStorage.getItem('palpites'));
+                if (palpitesSalvos) {
                     const resultadoElement = document.getElementById("palpiteResultados");
-
                     resultadoElement.innerHTML = `
                         <div class="resultado">
                             <h3>10 Milhares:</h3>
-                            ${palpites.milhares.map(m => `<p>${m.numero} - ${m.animal}</p>`).join('')}
+                            ${palpitesSalvos.milhares.map(m => `<p>${m.numero} - ${m.animal}</p>`).join('')}
                         </div>
                         <div class="resultado">
                             <h3>5 Grupos:</h3>
-                            ${palpites.grupos.map(g => `<p>${g.numero} - ${g.animal}</p>`).join('')}
+                            ${palpitesSalvos.grupos.map(g => `<p>${g.numero} - ${g.animal}</p>`).join('')}
                         </div>
                         <div class="resultado">
                             <h3>3 Duques de Dezena:</h3>
-                            ${palpites.duques.map(d => `<p>${d}</p>`).join('')}
+                            ${palpitesSalvos.duques.map(d => `<p>${d}</p>`).join('')}
                         </div>
                         <div class="resultado">
                             <h3>2 Ternos de Grupo:</h3>
-                            ${palpites.ternos.map(t => `<p>${t.grupo1} - ${t.grupo2} - ${t.grupo3}</p>`).join('')}
+                            ${palpitesSalvos.ternos.map(t => `<p>${t.grupo1} - ${t.grupo2} - ${t.grupo3}</p>`).join('')}
                         </div>
                     `;
                 }
