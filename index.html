@@ -20,156 +20,109 @@
             font-weight: bold;
             text-transform: uppercase;
             text-shadow: 2px 2px 4px #00ff00;
+            position: relative;
+        }
+        .menu-icon {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        .menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+        }
+        .menu a {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: black;
+        }
+        .menu a:hover {
+            background-color: #ddd;
         }
         .container {
             padding: 20px;
         }
-        .palpites {
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 30px;
-            margin: 20px 0;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .palpite {
-            margin-bottom: 15px;
-            padding: 10px;
-            background-color: #e0ffe0;
+        .btn-jogar {
+            display: block;
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
             border-radius: 5px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            font-size: 20px;
-            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
         }
-        .palpite .animal {
-            font-size: 24px;
-            font-weight: bold;
-            color: #4caf50;
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
         }
-        .palpite .numero {
-            font-size: 22px;
-            color: #333;
-        }
-        .whatsapp {
+        .popup {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             text-align: center;
-            margin-top: 30px;
-            font-size: 20px;
-            font-weight: bold;
+            position: relative;
         }
-        .whatsapp a {
-            color: #25D366;
-            text-decoration: none;
-            font-size: 24px;
-        }
-        footer {
-            background-color: #000;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-            font-size: 16px;
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 18px;
         }
     </style>
     <script>
-        function gerarPalpites() {
-            const animais = [
-                "Avestruz", "Águia", "Burro", "Borboleta", "Cachorro", "Cabra", 
-                "Carneiro", "Camelo", "Cobra", "Coelho", "Cavalo", "Elefante", 
-                "Galo", "Gato", "Jacaré", "Leão", "Macaco", "Porco", "Pavão", 
-                "Peru", "Touro", "Tigre", "Urso", "Veado", "Vaca"
-            ];
-
-            const gerarPalpiteGrupo = () => {
-                const grupo = Math.floor(Math.random() * 25);
-                return { animal: animais[grupo], numero: grupo + 1 };
-            };
-
-            const gerarPalpiteMilhar = () => {
-                return Math.floor(Math.random() * 9000) + 1000; // Número entre 1000 e 9999
-            };
-
-            const gerarPalpiteCentena = () => {
-                let centena = Math.floor(Math.random() * 1000); // Número entre 0 e 999
-                return centena.toString().padStart(3, '0'); // Garante 3 dígitos
-            };
-
-            const gerarPalpiteDuqueDeDezena = () => {
-                let duque = [];
-                while (duque.length < 2) {
-                    let dezena = Math.floor(Math.random() * 100);
-                    if (!duque.includes(dezena)) {
-                        duque.push(dezena.toString().padStart(2, '0'));
-                    }
-                }
-                return duque.join(" - ");
-            };
-
-            const gerarPalpiteTernoDeGrupo = () => {
-                return `${Math.floor(Math.random() * 25) + 1} - ${Math.floor(Math.random() * 25) + 1} - ${Math.floor(Math.random() * 25) + 1}`;
-            };
-
-            let palpitesMilhar = [];
-            for (let i = 0; i < 5; i++) {
-                palpitesMilhar.push(gerarPalpiteMilhar());
-            }
-
-            let palpitesCentena = [];
-            for (let i = 0; i < 5; i++) {
-                palpitesCentena.push(gerarPalpiteCentena());
-            }
-
-            let palpitesGrupo = [];
-            for (let i = 0; i < 3; i++) {
-                let grupo = gerarPalpiteGrupo();
-                palpitesGrupo.push({ animal: grupo.animal, numero: grupo.numero });
-            }
-
-            let palpiteDuqueDeDezena = gerarPalpiteDuqueDeDezena();
-            let palpiteTernoDeGrupo = gerarPalpiteTernoDeGrupo();
-
-            return {
-                palpitesMilhar,
-                palpitesCentena,
-                palpitesGrupo,
-                palpiteDuqueDeDezena,
-                palpiteTernoDeGrupo
-            };
+        function toggleMenu() {
+            let menu = document.getElementById("menu");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
         }
-
-        window.onload = function() {
-            const palpites = gerarPalpites();
-            document.getElementById('palpitesMilhar').innerHTML = palpites.palpitesMilhar.map(num => `<div class="palpite"><span class="numero">${num}</span></div>`).join('');
-            document.getElementById('palpitesCentena').innerHTML = palpites.palpitesCentena.map(num => `<div class="palpite"><span class="numero">${num}</span></div>`).join('');
-            document.getElementById('palpitesGrupo').innerHTML = palpites.palpitesGrupo.map(grupo => `<div class="palpite"><span class="animal">${grupo.animal}</span> - <span class="numero">${grupo.numero}</span></div>`).join('');
-            document.getElementById('palpiteDuqueDeDezena').innerHTML = `<div class="palpite"><span class="numero">${palpites.palpiteDuqueDeDezena}</span></div>`;
-            document.getElementById('palpiteTernoDeGrupo').innerHTML = `<div class="palpite"><span class="numero">${palpites.palpiteTernoDeGrupo}</span></div>`;
-        };
+        function abrirPopup() {
+            document.getElementById("overlay").style.display = "flex";
+        }
+        function fecharPopup() {
+            document.getElementById("overlay").style.display = "none";
+        }
     </script>
 </head>
 <body>
-    <header>🍀 Moreno da Sorte Jb 🍀</header>
-    <div class="container">
-        <div class="palpites">
-            <h2>Palpites de Milhar 🍀</h2>
-            <div id="palpitesMilhar"></div>
-
-            <h2>Palpites de Centena 🍀</h2>
-            <div id="palpitesCentena"></div>
-
-            <h2>Palpites de Grupo 🍀</h2>
-            <div id="palpitesGrupo"></div>
-
-            <h2>Palpite de Duque de Dezena 🍀</h2>
-            <div id="palpiteDuqueDeDezena"></div>
-
-            <h2>Palpite de Terno de Grupo 🍀</h2>
-            <div id="palpiteTernoDeGrupo"></div>
+    <header>
+        🍀 Moreno da Sorte Jb 🍀
+        <div class="menu-icon" onclick="toggleMenu()">☰</div>
+        <div id="menu" class="menu">
+            <a href="https://api.whatsapp.com/send?phone=%205583991023576&text=Ol%C3%A1%2C+Moreno+da+Sorte.+Fiquei+interessado+pelo+aplicativo+e+o+grupo+de+palpites." target="_blank">📞 Fale comigo</a>
+            <a href="#">🎥 Kwai: Moreno da Sorte Jb</a>
         </div>
-
-        <div class="whatsapp">
-            <p>Entre em contato pelo WhatsApp 📱</p>
-            <a href="https://wa.me/5583991023576" target="_blank">Clique aqui para falar com Moreno da Sorte Jb</a>
+    </header>
+    <div class="container">
+        <button class="btn-jogar" onclick="abrirPopup()">🎰 APERTE AQUI PARA JOGAR AGORA 🎰</button>
+        <div id="overlay" class="overlay">
+            <div class="popup">
+                <span class="close-btn" onclick="fecharPopup()">❌</span>
+                <iframe src="https://app.aguiaoficial.com/pr/ZXbjMC6Q" width="300" height="500"></iframe>
+            </div>
         </div>
     </div>
-
     <footer>
         <p>✨ www.morenodasortejb.com.br - Todos os direitos reservados ✨</p>
     </footer>
