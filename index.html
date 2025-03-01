@@ -10,7 +10,6 @@
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
-            background-image: url('https://www.example.com/foto-de-animal-1.jpg'); /* Troque pela URL do fundo */
             background-size: cover;
             background-position: center;
         }
@@ -97,6 +96,23 @@
             text-transform: uppercase;
             font-weight: bold;
         }
+        .upload-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+            width: 80%;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        #imageUpload {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -115,6 +131,8 @@
             <!-- Palpites gerados serão exibidos aqui -->
         </div>
         <div class="play-button" onclick="openGameWindow()">🎲 APERTE AQUI PARA JOGAR AGORA 🎲</div>
+        <div class="upload-button" onclick="document.getElementById('imageUpload').click()">📸 Escolha uma Imagem para o Fundo</div>
+        <input type="file" id="imageUpload" accept="image/*" onchange="changeBackground(event)">
     </div>
     
     <div class="floating-window" id="gameWindow">
@@ -232,6 +250,17 @@
 
                 html += `</ul>`;
                 palpitesDiv.innerHTML = html;
+            }
+        }
+
+        function changeBackground(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function() {
+                    document.body.style.backgroundImage = `url(${reader.result})`;
+                };
+                reader.readAsDataURL(file);
             }
         }
 
