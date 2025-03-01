@@ -92,6 +92,11 @@
             text-transform: uppercase;
             font-weight: bold;
         }
+        .result {
+            font-size: 18px;
+            margin-top: 15px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -107,7 +112,7 @@
     <div class="container">
         <div class="palpites">
             <h2>Palpites de Hoje 🍀</h2>
-            <p>Em breve, mais palpites atualizados!</p>
+            <div id="palpiteResultados"></div>
         </div>
         <div class="play-button" onclick="openGameWindow()">🎲 APERTE AQUI PARA JOGAR AGORA 🎲</div>
     </div>
@@ -130,6 +135,58 @@
         function closeGameWindow() {
             document.getElementById("gameWindow").style.display = "none";
         }
+
+        // Função para gerar palpites
+        function gerarPalpites() {
+            const animais = [
+                'Avestruz', 'Águia', 'Burro', 'Borboleta', 'Cachorro', 'Cabra', 'Carneiro', 'Camelo', 'Cobra', 'Coelho', 'Cavalo', 'Elefante',
+                'Galo', 'Gato', 'Jacaré', 'Leão', 'Macaco', 'Porco', 'Pavão', 'Peru', 'Touro', 'Tigre', 'Urso', 'Veado', 'Vaca'
+            ];
+
+            function gerarNumero(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            function gerarGrupo() {
+                return animais[gerarNumero(0, animais.length - 1)];
+            }
+
+            // Gerar 10 milhares
+            let milhares = [];
+            for (let i = 0; i < 10; i++) {
+                milhares.push(gerarNumero(1000, 9999));
+            }
+
+            // Gerar 5 grupos
+            let grupos = [];
+            for (let i = 0; i < 5; i++) {
+                grupos.push(gerarGrupo() + '-' + gerarGrupo());
+            }
+
+            // Gerar 3 duques de dezenas
+            let duques = [];
+            for (let i = 0; i < 3; i++) {
+                duques.push(gerarNumero(0, 9) + gerarNumero(0, 9));
+            }
+
+            // Gerar 2 ternos de grupos
+            let ternos = [];
+            for (let i = 0; i < 2; i++) {
+                ternos.push(gerarGrupo() + '-' + gerarGrupo() + '-' + gerarGrupo());
+            }
+
+            // Exibir os resultados na página
+            const resultadoElement = document.getElementById("palpiteResultados");
+            resultadoElement.innerHTML = `
+                <p><strong>10 Milhares:</strong> ${milhares.join(', ')}</p>
+                <p><strong>5 Grupos:</strong> ${grupos.join(', ')}</p>
+                <p><strong>3 Duques de Dezena:</strong> ${duques.join(', ')}</p>
+                <p><strong>2 Ternos de Grupo:</strong> ${ternos.join(', ')}</p>
+            `;
+        }
+
+        // Chama a função para gerar palpites ao carregar a página
+        gerarPalpites();
     </script>
 </body>
 </html>
