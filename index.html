@@ -243,11 +243,11 @@
                 gerarPalpites();
                 localStorage.setItem('ultimaGeracao', agora);
             } else {
-                console.log("Ainda não passaram 6 horas. Aguarde.");
-                // Carregar os palpites armazenados no localStorage
+                // Carregar palpites existentes
                 const palpites = JSON.parse(localStorage.getItem('palpites'));
                 if (palpites) {
                     const resultadoElement = document.getElementById("palpiteResultados");
+
                     resultadoElement.innerHTML = `
                         <div class="resultado">
                             <h3>10 Milhares:</h3>
