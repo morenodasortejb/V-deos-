@@ -1,102 +1,176 @@
-/* Reset de estilo */
+/* Resetando algumas propriedades padrão */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Estilo do cabeçalho */
-header {
-    background-color: #000;
-    color: #00FF00; /* Efeito verde */
-    text-align: center;
-    padding: 20px 0;
+/* Estilo geral do corpo da página */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    background-image: url('https://www.example.com/foto-de-animal-1.jpg'); /* Substitua pelo link da sua foto de fundo */
+    background-size: cover;
+    background-position: center;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
 }
 
-#logo {
-    font-size: 3rem;
+/* Cabeçalho */
+header {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    font-size: 32px;
     font-weight: bold;
     text-transform: uppercase;
-    animation: grow 2s infinite;
+    letter-spacing: 2px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Animação para o efeito verde */
-@keyframes grow {
-    0% {
-        color: #00FF00;
-    }
-    50% {
-        color: #FFFFFF;
-    }
-    100% {
-        color: #00FF00;
-    }
-}
-
-/* Estilos do container */
-.container {
-    display: flex;
-    padding: 20px;
-}
-
-/* Menu lateral */
-.sidebar {
-    width: 250px;
-    background-color: #1a1a1a;
+/* Estilo do menu flutuante */
+.menu-icon {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 35px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
     color: white;
+    padding: 15px;
+    border-radius: 50%;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.floating-menu {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.8);
     padding: 20px;
+    border-radius: 10px;
+    display: none;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.sidebar nav ul {
-    list-style-type: none;
-}
-
-.sidebar nav ul li {
-    margin: 10px 0;
-}
-
-.sidebar nav ul li a {
+.floating-menu a {
+    display: block;
     color: white;
     text-decoration: none;
-    font-size: 1.2rem;
+    padding: 15px;
+    font-size: 18px;
+    transition: background-color 0.3s;
 }
 
-.sidebar nav ul li a:hover {
-    color: #00FF00;
+.floating-menu a:hover {
+    background-color: #444;
 }
 
-/* Conteúdo principal */
-.main-content {
-    flex: 1;
+/* Estilo do conteúdo da página */
+.container {
+    max-width: 1200px;
+    margin: 50px auto;
     padding: 20px;
-    background-color: #f0f0f0;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.main-content h2 {
-    font-size: 2rem;
+/* Estilo da seção de palpites */
+.palpites {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.palpites h2 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
     color: #333;
 }
 
-.main-content p {
-    font-size: 1.2rem;
-    color: #666;
+.palpites div {
+    font-size: 18px;
+    line-height: 1.8;
 }
 
-/* Estilo da seção de propaganda */
-#propaganda {
-    background-color: #f9f9f9;
+.palpites ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.palpites li {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* Estilo do botão para abrir o jogo */
+.play-button {
+    display: block;
+    margin: 20px auto;
     padding: 20px;
+    background-color: #28a745;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+    width: 80%;
+    text-transform: uppercase;
+    font-weight: bold;
     border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* Rodapé */
-footer {
-    background-color: #000;
-    color: white;
-    text-align: center;
-    padding: 10px;
+.play-button:hover {
+    background-color: #218838;
+}
+
+/* Estilo da janela do jogo */
+.floating-window {
+    display: none;
     position: fixed;
-    width: 100%;
-    bottom: 0;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    background: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 1000;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff0000;
+}
+
+/* Estilo de responsividade */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    header {
+        font-size: 24px;
+        padding: 15px;
+    }
+
+    .play-button {
+        font-size: 18px;
+        padding: 15px;
+    }
 }
