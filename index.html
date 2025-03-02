@@ -147,7 +147,7 @@
     
     <div class="floating-window" id="gameWindow">
         <span class="close-btn" onclick="closeGameWindow()">✖</span>
-        <iframe src="https://app.aguiaoficial.com/pr/ZXbjMC6Q" width="100%" height="100%" frameborder="0"></iframe>
+        <iframe src="https://app.aguiaoficial.com/pr/ZXBjMC6Q" width="100%" height="100%" frameborder="0"></iframe>
     </div>
 
     <script>
@@ -261,13 +261,7 @@
         }
 
         function salvarPalpite(palpites) {
-            const dataHoraAtual = new Date().getTime();
-            const tempoPassado = localStorage.getItem('tempoUltimaAtualizacao') || 0;
-
-            if (dataHoraAtual - tempoPassado > 6 * 60 * 60 * 1000 || !localStorage.getItem('palpites')) {
-                localStorage.setItem('palpites', JSON.stringify(palpites));
-                localStorage.setItem('tempoUltimaAtualizacao', dataHoraAtual);
-            }
+            localStorage.setItem('palpites', JSON.stringify(palpites));
         }
 
         function carregarPalpites() {
