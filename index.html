@@ -113,6 +113,15 @@
         #imageUpload {
             display: none;
         }
+        .background-url-input {
+            display: block;
+            margin: 20px auto;
+            padding: 10px;
+            width: 80%;
+            font-size: 16px;
+            text-align: center;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -131,8 +140,9 @@
             <!-- Palpites gerados serão exibidos aqui -->
         </div>
         <div class="play-button" onclick="openGameWindow()">🎲 APERTE AQUI PARA JOGAR AGORA 🎲</div>
-        <div class="upload-button" onclick="document.getElementById('imageUpload').click()">📸 Escolha uma Imagem para o Fundo</div>
-        <input type="file" id="imageUpload" accept="image/*" onchange="changeBackground(event)">
+        
+        <!-- Campo de entrada para URL da imagem de fundo -->
+        <input type="text" id="backgroundUrl" class="background-url-input" placeholder="Digite o URL da imagem de fundo" oninput="changeBackgroundUrl()">
     </div>
     
     <div class="floating-window" id="gameWindow">
@@ -251,8 +261,13 @@
         }
 
         function salvarPalpite(palpites) {
-            // Atualiza os palpites cada vez que a página for recarregada
-            localStorage.setItem('palpites', JSON.stringify(palpites));
+            const dataHoraAtual = new Date().getTime();
+            const tempoPassado = localStorage.getItem('tempoUltimaAtualizacao') || 0;
+
+            if (dataHoraAtual - tempoPassado > 6 * 60 * 60 * 1000 || !localStorage.getItem('palpites')) {
+                localStorage.setItem('palpites', JSON.stringify(palpites));
+                localStorage.setItem('tempoUltimaAtualizacao', dataHoraAtual);
+            }
         }
 
         function carregarPalpites() {
@@ -261,8 +276,7 @@
                 const palpitesDiv = document.getElementById('palpites');
                 let html = `
                     <h3>Palpites de Milhar com Centena:</h3>
-                    <ul>
-                `;
+                    <ul>`;
                 palpites.milhares.forEach(item => {
                     html += `<li>${item.milhar} - ${item.animal.nome} ${item.animal.emoji}</li>`;
                 });
@@ -287,33 +301,20 @@
             }
         }
 
-        function changeBackground(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function() {
-                    document.body.style.backgroundImage = `url(${reader.result})`;
-                }
-                reader.readAsDataURL(file);
+        function changeBackgroundUrl() {
+            const url = document.getElementById('backgroundUrl').value;
+            if (url) {
+                document.body.style.backgroundImage = `url(${url})`;
+                localStorage.setItem('backgroundImage', url);
             }
         }
 
-        function toggleMenu() {
-            const menu = document.getElementById('floatingMenu');
-            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function openGameWindow() {
-            document.getElementById('gameWindow').style.display = 'block';
-        }
-
-        function closeGameWindow() {
-            document.getElementById('gameWindow').style.display = 'none';
-        }
-
         window.onload = function() {
-            const palpites = gerarPalpite();
-            salvarPalpite(palpites);
+            const backgroundUrl = localStorage.getItem('backgroundImage');
+            if (backgroundUrl) {
+                document.body.style.backgroundImage = `url(${backgroundUrl})`;
+                document.getElementById('backgroundUrl').value = backgroundUrl;
+            }
             carregarPalpites();
         }
     </script>
