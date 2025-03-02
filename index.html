@@ -260,57 +260,36 @@
             return palpites;
         }
 
-        function salvarPalpite(palpites) {
-            localStorage.setItem('palpites', JSON.stringify(palpites));
-        }
-
         function carregarPalpites() {
-            const palpites = JSON.parse(localStorage.getItem('palpites'));
-            if (palpites) {
-                const palpitesDiv = document.getElementById('palpites');
-                let html = `
-                    <h3>Palpites de Milhar com Centena:</h3>
-                    <ul>`;
-                palpites.milhares.forEach(item => {
-                    html += `<li>${item.milhar} - ${item.animal.nome} ${item.animal.emoji}</li>`;
-                });
+            const palpites = gerarPalpite(); // Gera novos palpites a cada recarga da página
+            const palpitesDiv = document.getElementById('palpites');
+            let html = `
+                <h3>Palpites de Milhar com Centena:</h3>
+                <ul>`;
+            palpites.milhares.forEach(item => {
+                html += `<li>${item.milhar} - ${item.animal.nome} ${item.animal.emoji}</li>`;
+            });
 
-                html += `</ul><h3>Palpites de Grupos:</h3><ul>`;
-                palpites.grupos.forEach(item => {
-                    html += `<li>${item.grupo} - ${item.animal.nome} ${item.animal.emoji}</li>`;
-                });
+            html += `</ul><h3>Palpites de Grupos:</h3><ul>`;
+            palpites.grupos.forEach(item => {
+                html += `<li>${item.grupo} - ${item.animal.nome} ${item.animal.emoji}</li>`;
+            });
 
-                html += `</ul><h3>Duques:</h3><ul>`;
-                palpites.duques.forEach(item => {
-                    html += `<li>${item}</li>`;
-                });
+            html += `</ul><h3>Duques:</h3><ul>`;
+            palpites.duques.forEach(item => {
+                html += `<li>${item}</li>`;
+            });
 
-                html += `</ul><h3>Ternos:</h3><ul>`;
-                palpites.ternos.forEach(item => {
-                    html += `<li>${item}</li>`;
-                });
+            html += `</ul><h3>Ternos:</h3><ul>`;
+            palpites.ternos.forEach(item => {
+                html += `<li>${item}</li>`;
+            });
 
-                html += `</ul>`;
-                palpitesDiv.innerHTML = html;
-            }
+            html += `</ul>`;
+            palpitesDiv.innerHTML = html;
         }
 
-        function changeBackgroundUrl() {
-            const url = document.getElementById('backgroundUrl').value;
-            if (url) {
-                document.body.style.backgroundImage = `url(${url})`;
-                localStorage.setItem('backgroundImage', url);
-            }
-        }
-
-        window.onload = function() {
-            const backgroundUrl = localStorage.getItem('backgroundImage');
-            if (backgroundUrl) {
-                document.body.style.backgroundImage = `url(${backgroundUrl})`;
-                document.getElementById('backgroundUrl').value = backgroundUrl;
-            }
-            carregarPalpites();
-        }
+        window.onload = carregarPalpites; // Chama a função ao carregar a página
     </script>
 </body>
 </html>
