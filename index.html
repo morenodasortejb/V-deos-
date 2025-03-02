@@ -199,14 +199,13 @@
                 [96, 97, 98, 99]  // Vaca
             ];
 
-            // Determina o grupo com base no último dígito da milhar
             const ultimoDigito = numero % 100;
             for (let i = 0; i < grupos.length; i++) {
                 if (grupos[i].includes(ultimoDigito)) {
                     return animais[i];
                 }
             }
-            return null; // Caso não encontre, retorna null
+            return null;
         }
 
         function gerarPalpite() {
@@ -217,7 +216,6 @@
                 ternos: []
             };
 
-            // Gerando 10 palpites de milhar
             for (let i = 0; i < 10; i++) {
                 let milhar = Math.floor(Math.random() * 1000) + 1000;
                 let centena = Math.floor(Math.random() * 10);
@@ -228,7 +226,6 @@
                 });
             }
 
-            // Gerando 5 palpites de grupo
             for (let i = 0; i < 5; i++) {
                 let grupo = Math.floor(Math.random() * 25) + 1;
                 palpites.grupos.push({
@@ -237,13 +234,11 @@
                 });
             }
 
-            // Gerando 3 duques de dezena
             for (let i = 0; i < 3; i++) {
                 let duque = `${Math.floor(Math.random() * 100) + 10}-${Math.floor(Math.random() * 100) + 10}`;
                 palpites.duques.push(duque);
             }
 
-            // Gerando 2 ternos de grupos
             for (let i = 0; i < 2; i++) {
                 let terno = `${Math.floor(Math.random() * 25) + 1}-${Math.floor(Math.random() * 25) + 1}-${Math.floor(Math.random() * 25) + 1}`;
                 palpites.ternos.push(terno);
