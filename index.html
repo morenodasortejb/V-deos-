@@ -259,33 +259,27 @@
                 const reader = new FileReader();
                 reader.onload = function() {
                     document.body.style.backgroundImage = `url(${reader.result})`;
-                };
+                }
                 reader.readAsDataURL(file);
             }
         }
 
-        // Funções do menu flutuante
         function toggleMenu() {
             const menu = document.getElementById('floatingMenu');
             menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
         }
 
         function openGameWindow() {
-            const gameWindow = document.getElementById('gameWindow');
-            gameWindow.style.display = 'block';
+            document.getElementById('gameWindow').style.display = 'block';
         }
 
         function closeGameWindow() {
-            const gameWindow = document.getElementById('gameWindow');
-            gameWindow.style.display = 'none';
+            document.getElementById('gameWindow').style.display = 'none';
         }
 
-        // Função inicial para gerar e exibir os palpites
-        document.addEventListener('DOMContentLoaded', () => {
-            const palpites = gerarPalpite();
-            salvarPalpite(palpites);
+        window.onload = function() {
             carregarPalpites();
-        });
+        }
     </script>
 </body>
 </html>
