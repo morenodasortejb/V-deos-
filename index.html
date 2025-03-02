@@ -132,6 +132,11 @@
         .scrollable-space {
             height: 100px; /* Tamanho do espaço vazio que permite rolar os palpites */
         }
+
+        /* Espaço extra no final da página para celular, permitindo que os palpites fiquem visíveis */
+        .extra-space {
+            height: 400px; /* Espaço extra para evitar sobreposição da janela flutuante */
+        }
     </style>
 </head>
 <body>
@@ -154,6 +159,9 @@
 
         <!-- Espaço adicional para celular -->
         <div class="scrollable-space"></div>
+
+        <!-- Espaço extra para permitir que o usuário role até o final no celular -->
+        <div class="extra-space"></div>
     </div>
 
     <!-- Janela flutuante com o link do aplicativo corrigido -->
