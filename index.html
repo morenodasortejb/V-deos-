@@ -172,40 +172,40 @@
         // Função para associar o animal ao número de milhar
         function obterAnimalPorNumero(numero) {
             const grupos = [
-                [0, 1, 2, 3], // Avestruz
-                [4, 5, 6, 7], // Águia
-                [8, 9, 10, 11], // Burro
-                [12, 13, 14, 15], // Borboleta
-                [16, 17, 18, 19], // Cachorro
-                [20, 21, 22, 23], // Cabra
-                [24, 25, 26, 27], // Carneiro
-                [28, 29, 30, 31], // Camelo
-                [32, 33, 34, 35], // Cobra
-                [36, 37, 38, 39], // Coelho
-                [40, 41, 42, 43], // Cavalo
-                [44, 45, 46, 47], // Elefante
-                [48, 49, 50, 51], // Galo
-                [52, 53, 54, 55], // Gato
-                [56, 57, 58, 59], // Jacaré
-                [60, 61, 62, 63], // Leão
-                [64, 65, 66, 67], // Macaco
-                [68, 69, 70, 71], // Porco
-                [72, 73, 74, 75], // Pavão
-                [76, 77, 78, 79], // Peru
-                [80, 81, 82, 83], // Touro
-                [84, 85, 86, 87], // Tigre
-                [88, 89, 90, 91], // Urso
-                [92, 93, 94, 95], // Veado
-                [96, 97, 98, 99]  // Vaca
+                { nome: "Avestruz", range: [0, 1, 2, 3] },
+                { nome: "Águia", range: [4, 5, 6, 7] },
+                { nome: "Burro", range: [8, 9, 10, 11] },
+                { nome: "Borboleta", range: [12, 13, 14, 15] },
+                { nome: "Cachorro", range: [16, 17, 18, 19] },
+                { nome: "Cabra", range: [20, 21, 22, 23] },
+                { nome: "Carneiro", range: [24, 25, 26, 27] },
+                { nome: "Camelo", range: [28, 29, 30, 31] },
+                { nome: "Cobra", range: [32, 33, 34, 35] },
+                { nome: "Coelho", range: [36, 37, 38, 39] },
+                { nome: "Cavalo", range: [40, 41, 42, 43] },
+                { nome: "Elefante", range: [44, 45, 46, 47] },
+                { nome: "Galo", range: [48, 49, 50, 51] },
+                { nome: "Gato", range: [52, 53, 54, 55] },
+                { nome: "Jacaré", range: [56, 57, 58, 59] },
+                { nome: "Leão", range: [60, 61, 62, 63] },
+                { nome: "Macaco", range: [64, 65, 66, 67] },
+                { nome: "Porco", range: [68, 69, 70, 71] },
+                { nome: "Pavão", range: [72, 73, 74, 75] },
+                { nome: "Peru", range: [76, 77, 78, 79] },
+                { nome: "Touro", range: [80, 81, 82, 83] },
+                { nome: "Tigre", range: [84, 85, 86, 87] },
+                { nome: "Urso", range: [88, 89, 90, 91] },
+                { nome: "Veado", range: [92, 93, 94, 95] },
+                { nome: "Vaca", range: [96, 97, 98, 99] }
             ];
 
-            const ultimoDigito = numero % 100;
+            const ultimoDigito = numero % 100; // O dígito que determina o animal
             for (let i = 0; i < grupos.length; i++) {
-                if (grupos[i].includes(ultimoDigito)) {
-                    return animais[i];
+                if (grupos[i].range.includes(ultimoDigito)) {
+                    return animais[i]; // Retorna o animal correto
                 }
             }
-            return null;
+            return null; // Caso não encontre, retorna null
         }
 
         function gerarPalpite() {
@@ -216,9 +216,9 @@
                 ternos: []
             };
 
+            // Gerando 10 palpites de milhar
             for (let i = 0; i < 10; i++) {
                 let milhar = Math.floor(Math.random() * 1000) + 1000;
-                let centena = Math.floor(Math.random() * 10);
                 let animal = obterAnimalPorNumero(milhar);
                 palpites.milhares.push({
                     milhar: `${milhar}`,
@@ -226,6 +226,7 @@
                 });
             }
 
+            // Gerando 5 palpites de grupo
             for (let i = 0; i < 5; i++) {
                 let grupo = Math.floor(Math.random() * 25) + 1;
                 palpites.grupos.push({
@@ -234,11 +235,13 @@
                 });
             }
 
+            // Gerando 3 duques de dezena
             for (let i = 0; i < 3; i++) {
                 let duque = `${Math.floor(Math.random() * 100) + 10}-${Math.floor(Math.random() * 100) + 10}`;
                 palpites.duques.push(duque);
             }
 
+            // Gerando 2 ternos de grupos
             for (let i = 0; i < 2; i++) {
                 let terno = `${Math.floor(Math.random() * 25) + 1}-${Math.floor(Math.random() * 25) + 1}-${Math.floor(Math.random() * 25) + 1}`;
                 palpites.ternos.push(terno);
@@ -248,13 +251,8 @@
         }
 
         function salvarPalpite(palpites) {
-            const dataHoraAtual = new Date().getTime();
-            const tempoPassado = localStorage.getItem('tempoUltimaAtualizacao') || 0;
-
-            if (dataHoraAtual - tempoPassado > 6 * 60 * 60 * 1000 || !localStorage.getItem('palpites')) {
-                localStorage.setItem('palpites', JSON.stringify(palpites));
-                localStorage.setItem('tempoUltimaAtualizacao', dataHoraAtual);
-            }
+            // Atualiza os palpites cada vez que a página for recarregada
+            localStorage.setItem('palpites', JSON.stringify(palpites));
         }
 
         function carregarPalpites() {
@@ -314,6 +312,8 @@
         }
 
         window.onload = function() {
+            const palpites = gerarPalpite();
+            salvarPalpite(palpites);
             carregarPalpites();
         }
     </script>
