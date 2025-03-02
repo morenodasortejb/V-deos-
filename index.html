@@ -87,12 +87,12 @@
         }
         .floating-window {
             position: fixed;
-            top: 20%;
-            right: 20px;
-            width: 450px;
-            height: 600px;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 500px;
             background-color: #fff;
-            border-radius: 10px;
+            border-radius: 10px 10px 0 0;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             padding: 20px;
             z-index: 999;
@@ -213,65 +213,4 @@
                 let milhar = Math.floor(Math.random() * 10000); // Agora gera números de 0000 a 9999
                 let animal = obterAnimalPorNumero(milhar);
                 palpites.milhares.push({
-                    milhar: `${milhar.toString().padStart(4, '0')}`, // Garante que o número tenha 4 dígitos
-                    animal: animal
-                });
-            }
-
-            // Gerando 5 palpites de grupo
-            for (let i = 0; i < 5; i++) {
-                let grupo = Math.floor(Math.random() * 25) + 1;
-                palpites.grupos.push({
-                    grupo: grupo,
-                    animal: animais[grupo - 1]
-                });
-            }
-
-            // Gerando 3 duques de dezena
-            for (let i = 0; i < 3; i++) {
-                let duque = `${Math.floor(Math.random() * 100) + 10}-${Math.floor(Math.random() * 100) + 10}`;
-                palpites.duques.push(duque);
-            }
-
-            // Gerando 2 ternos de grupos
-            for (let i = 0; i < 2; i++) {
-                let terno = `${Math.floor(Math.random() * 25) + 1}-${Math.floor(Math.random() * 25) + 1}-${Math.floor(Math.random() * 25) + 1}`;
-                palpites.ternos.push(terno);
-            }
-
-            return palpites;
-        }
-
-        function carregarPalpites() {
-            const palpites = gerarPalpite();
-            const palpitesDiv = document.getElementById('palpites');
-            let html = `
-                <h3>Palpites de Milhar com Centena:</h3>
-                <ul>`;
-            palpites.milhares.forEach(item => {
-                html += `<li>${item.milhar} - ${item.animal.nome} ${item.animal.emoji}</li>`;
-            });
-
-            html += `</ul><h3>Palpites de Grupos:</h3><ul>`;
-            palpites.grupos.forEach(item => {
-                html += `<li>${item.grupo} - ${item.animal.nome} ${item.animal.emoji}</li>`;
-            });
-
-            html += `</ul><h3>Duques:</h3><ul>`;
-            palpites.duques.forEach(item => {
-                html += `<li>${item}</li>`;
-            });
-
-            html += `</ul><h3>Ternos:</h3><ul>`;
-            palpites.ternos.forEach(item => {
-                html += `<li>${item}</li>`;
-            });
-
-            html += `</ul>`;
-            palpitesDiv.innerHTML = html;
-        }
-
-        window.onload = carregarPalpites;
-    </script>
-</body>
-</html>
+  
