@@ -12,41 +12,98 @@
             padding: 0;
             background-size: cover;
             background-position: center;
+            color: #333;
         }
         header {
             background-color: #000;
             color: #fff;
             text-align: center;
-            padding: 15px;
+            padding: 20px;
             font-size: 32px;
             font-weight: bold;
             text-transform: uppercase;
             position: relative;
         }
-        .hamburger {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            cursor: pointer;
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .hamburger div {
-            width: 30px;
-            height: 5px;
-            background-color: #fff;
-            margin: 6px 0;
+        .header-left {
+            font-size: 24px;
+        }
+        .header-right {
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+        }
+        .header-right a {
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+        .header-right a i {
+            margin-right: 8px;
         }
         .container {
             padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         .palpites {
             background-color: #fff;
             border-radius: 10px;
             padding: 30px;
             margin: 20px 0;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
-        .palpites div {
-            margin-bottom: 10px;
+        .palpites h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #28a745;
+        }
+        .palpites ul {
+            list-style: none;
+            padding-left: 0;
+            font-size: 18px;
+        }
+        .palpites ul li {
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .palpites ul li:hover {
+            background-color: #e0ffe0;
+        }
+        .floating-window {
+            position: fixed;
+            top: 20%;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .floating-window iframe {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
         }
         .button-jogar {
             background-color: #28a745;
@@ -58,25 +115,35 @@
             display: inline-block;
             margin: 20px 0;
             text-decoration: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
-    <header>🍀 Moreno da Sorte Jb 🍀
-        <!-- Menu de três traços -->
-        <div class="hamburger" onclick="toggleMenu()">
-            <div></div>
-            <div></div>
-            <div></div>
+    <header>
+        <div class="header-container">
+            <div class="header-left">🍀 Moreno da Sorte Jb 🍀</div>
+            <div class="header-right">
+                <a href="https://w.app/ngczri" target="_blank">
+                    <i class="fas fa-phone"></i> Aperte Aqui Para Falar Comigo
+                </a>
+            </div>
         </div>
     </header>
 
     <div class="container">
-        <a href="seu-link-aqui" class="button-jogar">Aperte Aqui Para Jogar</a>
+        <a href="https://app.aguiaoficial.com/pr/ZXbjMC6Q" target="_blank" class="button-jogar">
+            Aperte Aqui Para Jogar
+        </a>
         <div class="palpites" id="palpites">
             <h2>Palpites de Hoje 🍀</h2>
             <!-- Palpites gerados serão exibidos aqui -->
         </div>
+    </div>
+
+    <!-- Janela flutuante com o link do aplicativo -->
+    <div class="floating-window">
+        <iframe src="https://app.aguiaoficial.com/pr/ZXbjMC6Q" title="Jogar Aguardando Link"></iframe>
     </div>
 
     <script>
@@ -216,10 +283,6 @@
 
             html += `</ul>`;
             palpitesDiv.innerHTML = html;
-        }
-
-        function toggleMenu() {
-            alert("Aqui é o seu contato para mais informações ou jogadas!");
         }
 
         window.onload = carregarPalpites; // Chama a função ao carregar a página
