@@ -13,6 +13,7 @@
             background-size: cover;
             background-position: center;
             color: #333;
+            overflow-x: hidden;
         }
         header {
             background-color: #000;
@@ -85,11 +86,14 @@
         .palpites ul li:hover {
             background-color: #e0ffe0;
         }
+
+        /* Janela flutuante */
         .floating-window {
             position: fixed;
-            top: 20%;
-            right: 20px;
-            width: 350px;
+            bottom: 10px;
+            right: 10px;
+            left: 10px; /* Garantindo que tenha o mesmo espaço nas laterais */
+            width: auto; /* A largura será ajustada automaticamente */
             height: 500px;
             background-color: #fff;
             border-radius: 10px;
@@ -100,11 +104,40 @@
             flex-direction: column;
             align-items: center;
             overflow-y: auto;
+            overflow-x: hidden;
         }
+
         .floating-window iframe {
             width: 100%;
             height: 100%;
             border-radius: 10px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .floating-window {
+                height: 400px;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                border-radius: 0;
+                width: 100%; /* A largura da janela flutuante se ajusta 100% no celular */
+                padding: 10px; /* Ajustando o padding para manter simetria */
+            }
+
+            .container {
+                padding-bottom: 100px; /* Espaço adicional para o celular */
+            }
+        }
+
+        /* Espaço adicional para celular */
+        .scrollable-space {
+            height: 100px; /* Tamanho do espaço vazio que permite rolar os palpites */
+        }
+
+        /* Espaço extra no final da página para celular */
+        .extra-space {
+            height: 400px; /* Espaço extra para evitar sobreposição da janela flutuante */
         }
     </style>
 </head>
@@ -125,11 +158,20 @@
             <h2>Palpites de Hoje 🍀</h2>
             <!-- Palpites gerados serão exibidos aqui -->
         </div>
+
+        <!-- Espaço adicional para celular -->
+        <div class="scrollable-space"></div>
+
+        <!-- Espaço extra para permitir que o usuário role até o final no celular -->
+        <div class="extra-space"></div>
     </div>
 
-    <!-- Janela flutuante com o link do promotor atualizado -->
+    <!-- Janela flutuante com o link do aplicativo corrigido -->
     <div class="floating-window">
         <iframe src="https://app.aguiaoficial.com/pr/XvrHVdt2" title="Jogar Aguardando Link"></iframe>
+        <a href="https://wa.me/5531986543210" target="_blank" style="margin-top: 10px; background-color: #25d366; color: #fff; padding: 10px 20px; border-radius: 10px; text-decoration: none; display: flex; align-items: center;">
+            <i class="fab fa-whatsapp" style="margin-right: 10px;"></i> Fale com o Suporte
+        </a>
     </div>
 
     <script>
@@ -220,19 +262,22 @@
 
             // Gerando 5 palpites de grupo
             for (let i = 0; i < 5; i++) {
-                let grupo = Math.floor(Math.random() * 25) + 1; // Gera um grupo entre 1 e 25
-                palpites.grupos.push(grupo);
+                let grupo = Math.floor(Math.random() * 25) + 1;
+                palpites.grupos.push({
+                    grupo: grupo,
+                    animal: animais[grupo - 1]
+                });
             }
 
-            // Gerando 5 palpites de duques
-            for (let i = 0; i < 5; i++) {
-                let duque = Math.floor(Math.random() * 100);
+            // Gerando 3 duques de dezena
+            for (let i = 0; i < 3; i++) {
+                let duque = `${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`;
                 palpites.duques.push(duque);
             }
 
-            // Gerando 5 palpites de ternos
-            for (let i = 0; i < 5; i++) {
-                let terno = Math.floor(Math.random() * 100);
+            // Gerando 2 ternos de dezenas
+            for (let i = 0; i < 2; i++) {
+                let terno = `${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`;
                 palpites.ternos.push(terno);
             }
 
@@ -241,41 +286,36 @@
 
         function exibirPalpites() {
             const palpites = gerarPalpite();
-            const container = document.getElementById('palpites');
 
-            // Exibe os palpites de milhar
-            let html = "<h2>Palpites de Milhar:</h2><ul>";
+            let html = "<h2>Palpites do Dia 🍀</h2>";
+            html += "<div class='palpite-item'><h3>Palpites de Milhar:</h3><ul>";
             palpites.milhares.forEach(palpite => {
                 html += `<li>${palpite.milhar} - ${palpite.animal.emoji} ${palpite.animal.nome}</li>`;
             });
-            html += "</ul>";
+            html += "</ul></div>";
 
-            // Exibe os palpites de grupo
-            html += "<h2>Palpites de Grupo:</h2><ul>";
-            palpites.grupos.forEach(grupo => {
-                html += `<li>Grupo ${grupo}</li>`;
+            html += "<div class='palpite-item'><h3>Palpites de Grupo:</h3><ul>";
+            palpites.grupos.forEach(palpite => {
+                html += `<li>${palpite.grupo} - ${palpite.animal.emoji} ${palpite.animal.nome}</li>`;
             });
-            html += "</ul>";
+            html += "</ul></div>";
 
-            // Exibe os palpites de duque
-            html += "<h2>Palpites de Duque:</h2><ul>";
-            palpites.duques.forEach(duque => {
-                html += `<li>Duque ${duque}</li>`;
+            html += "<div class='palpite-item'><h3>Palpites de Duques:</h3><ul>";
+            palpites.duques.forEach(palpite => {
+                html += `<li>${palpite}</li>`;
             });
-            html += "</ul>";
+            html += "</ul></div>";
 
-            // Exibe os palpites de terno
-            html += "<h2>Palpites de Terno:</h2><ul>";
-            palpites.ternos.forEach(terno => {
-                html += `<li>Terno ${terno}</li>`;
+            html += "<div class='palpite-item'><h3>Palpites de Ternos:</h3><ul>";
+            palpites.ternos.forEach(palpite => {
+                html += `<li>${palpite}</li>`;
             });
-            html += "</ul>";
+            html += "</ul></div>";
 
-            container.innerHTML = html;
+            document.getElementById('palpites').innerHTML = html;
         }
 
-        // Exibir os palpites ao carregar a página
-        window.onload = exibirPalpites;
+        exibirPalpites(); // Exibe os palpites automaticamente quando a página é carregada
     </script>
 </body>
 </html>
