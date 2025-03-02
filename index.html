@@ -21,6 +21,19 @@
             font-size: 32px;
             font-weight: bold;
             text-transform: uppercase;
+            position: relative;
+        }
+        .hamburger {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+        }
+        .hamburger div {
+            width: 30px;
+            height: 5px;
+            background-color: #fff;
+            margin: 6px 0;
         }
         .container {
             padding: 20px;
@@ -35,12 +48,31 @@
         .palpites div {
             margin-bottom: 10px;
         }
+        .button-jogar {
+            background-color: #28a745;
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 20px;
+            display: inline-block;
+            margin: 20px 0;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
-    <header>🍀 Moreno da Sorte Jb 🍀</header>
+    <header>🍀 Moreno da Sorte Jb 🍀
+        <!-- Menu de três traços -->
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </header>
 
     <div class="container">
+        <a href="seu-link-aqui" class="button-jogar">Aperte Aqui Para Jogar</a>
         <div class="palpites" id="palpites">
             <h2>Palpites de Hoje 🍀</h2>
             <!-- Palpites gerados serão exibidos aqui -->
@@ -184,6 +216,10 @@
 
             html += `</ul>`;
             palpitesDiv.innerHTML = html;
+        }
+
+        function toggleMenu() {
+            alert("Aqui é o seu contato para mais informações ou jogadas!");
         }
 
         window.onload = carregarPalpites; // Chama a função ao carregar a página
