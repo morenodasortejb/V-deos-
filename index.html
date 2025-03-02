@@ -163,7 +163,7 @@
         // Função para associar o animal ao número de milhar
         function obterAnimalPorNumero(numero) {
             const grupos = [
-                { nome: "Avestruz", range: [1, 2, 3, 4] }, // De 01 a 04
+                { nome: "Avestruz", range: [1, 2, 3, 4] },
                 { nome: "Águia", range: [5, 6, 7, 8] },
                 { nome: "Burro", range: [9, 10, 11, 12] },
                 { nome: "Borboleta", range: [13, 14, 15, 16] },
@@ -187,16 +187,16 @@
                 { nome: "Tigre", range: [85, 86, 87, 88] },
                 { nome: "Urso", range: [89, 90, 91, 92] },
                 { nome: "Veado", range: [93, 94, 95, 96] },
-                { nome: "Vaca", range: [97, 98, 99, 0] } // 97, 98, 99 e 00 são de Vaca
+                { nome: "Vaca", range: [97, 98, 99, 0] }
             ];
 
-            const ultimoDigito = numero % 100; // O dígito que determina o animal
+            const ultimoDigito = numero % 100;
             for (let i = 0; i < grupos.length; i++) {
                 if (grupos[i].range.includes(ultimoDigito)) {
-                    return animais[i]; // Retorna o animal correto
+                    return animais[i];
                 }
             }
-            return null; // Caso não encontre, retorna null
+            return null;
         }
 
         function gerarPalpite() {
@@ -207,12 +207,12 @@
                 ternos: []
             };
 
-            // Gerando 10 palpites de milhar
+            // Gerando 10 palpites de milhar com números aleatórios
             for (let i = 0; i < 10; i++) {
-                let milhar = Math.floor(Math.random() * 1000) + 1000;
+                let milhar = Math.floor(Math.random() * 10000); // Agora gera números de 0000 a 9999
                 let animal = obterAnimalPorNumero(milhar);
                 palpites.milhares.push({
-                    milhar: `${milhar}`,
+                    milhar: `${milhar.toString().padStart(4, '0')}`, // Garante que o número tenha 4 dígitos
                     animal: animal
                 });
             }
@@ -242,7 +242,7 @@
         }
 
         function carregarPalpites() {
-            const palpites = gerarPalpite(); // Gera novos palpites a cada recarga da página
+            const palpites = gerarPalpite();
             const palpitesDiv = document.getElementById('palpites');
             let html = `
                 <h3>Palpites de Milhar com Centena:</h3>
@@ -270,7 +270,7 @@
             palpitesDiv.innerHTML = html;
         }
 
-        window.onload = carregarPalpites; // Chama a função ao carregar a página
+        window.onload = carregarPalpites;
     </script>
 </body>
 </html>
