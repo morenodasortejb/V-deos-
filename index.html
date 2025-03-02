@@ -92,8 +92,8 @@
             position: fixed;
             bottom: 10px;
             right: 10px;
-            left: 10px; /* Garantindo que tenha o mesmo espaço nas laterais */
-            width: auto; /* A largura será ajustada automaticamente */
+            left: 10px;
+            width: auto;
             height: 500px;
             background-color: #fff;
             border-radius: 10px;
@@ -113,7 +113,6 @@
             border-radius: 10px;
         }
 
-        /* Responsividade */
         @media (max-width: 768px) {
             .floating-window {
                 height: 400px;
@@ -121,23 +120,21 @@
                 right: 0;
                 left: 0;
                 border-radius: 0;
-                width: 100%; /* A largura da janela flutuante se ajusta 100% no celular */
-                padding: 10px; /* Ajustando o padding para manter simetria */
+                width: 100%;
+                padding: 10px;
             }
 
             .container {
-                padding-bottom: 100px; /* Espaço adicional para o celular */
+                padding-bottom: 100px;
             }
         }
 
-        /* Espaço adicional para celular */
         .scrollable-space {
-            height: 100px; /* Tamanho do espaço vazio que permite rolar os palpites */
+            height: 100px;
         }
 
-        /* Espaço extra no final da página para celular */
         .extra-space {
-            height: 400px; /* Espaço extra para evitar sobreposição da janela flutuante */
+            height: 400px;
         }
     </style>
 </head>
@@ -156,17 +153,12 @@
     <div class="container">
         <div class="palpites" id="palpites">
             <h2>Palpites de Hoje 🍀</h2>
-            <!-- Palpites gerados serão exibidos aqui -->
         </div>
 
-        <!-- Espaço adicional para celular -->
         <div class="scrollable-space"></div>
-
-        <!-- Espaço extra para permitir que o usuário role até o final no celular -->
         <div class="extra-space"></div>
     </div>
 
-    <!-- Janela flutuante com o link do aplicativo corrigido -->
     <div class="floating-window">
         <iframe src="https://app.aguiaoficial.com/pr/XvrHVdt2" title="Jogar Aguardando Link"></iframe>
         <a href="https://wa.me/5531986543210" target="_blank" style="margin-top: 10px; background-color: #25d366; color: #fff; padding: 10px 20px; border-radius: 10px; text-decoration: none; display: flex; align-items: center;">
@@ -203,7 +195,6 @@
             { nome: "Vaca", emoji: "🐄" }
         ];
 
-        // Função para associar o animal ao número de milhar
         function obterAnimalPorNumero(numero) {
             const grupos = [
                 { nome: "Avestruz", range: [1, 2, 3, 4] },
@@ -250,17 +241,15 @@
                 ternos: []
             };
 
-            // Gerando 10 palpites de milhar com números aleatórios
             for (let i = 0; i < 10; i++) {
-                let milhar = Math.floor(Math.random() * 10000); // Agora gera números de 0000 a 9999
+                let milhar = Math.floor(Math.random() * 10000);
                 let animal = obterAnimalPorNumero(milhar);
                 palpites.milhares.push({
-                    milhar: `${milhar.toString().padStart(4, '0')}`, // Garante que o número tenha 4 dígitos
+                    milhar: `${milhar.toString().padStart(4, '0')}`,
                     animal: animal
                 });
             }
 
-            // Gerando 5 palpites de grupo
             for (let i = 0; i < 5; i++) {
                 let grupo = Math.floor(Math.random() * 25) + 1;
                 palpites.grupos.push({
@@ -269,13 +258,11 @@
                 });
             }
 
-            // Gerando 3 duques de dezena
             for (let i = 0; i < 3; i++) {
                 let duque = `${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`;
                 palpites.duques.push(duque);
             }
 
-            // Gerando 2 ternos de dezenas
             for (let i = 0; i < 2; i++) {
                 let terno = `${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`;
                 palpites.ternos.push(terno);
@@ -315,7 +302,7 @@
             document.getElementById('palpites').innerHTML = html;
         }
 
-        exibirPalpites(); // Exibe os palpites automaticamente quando a página é carregada
+        exibirPalpites();
     </script>
 </body>
 </html>
