@@ -169,44 +169,44 @@
             { nome: "Vaca", emoji: "🐄" }
         ];
 
-        // Função para determinar o animal com base no número da milhar ou centena
-        function obterAnimal(numero) {
-            const animaisPorMilhar = [
-                { nome: "Avestruz", faixa: [0, 4] },
-                { nome: "Águia", faixa: [5, 8] },
-                { nome: "Burro", faixa: [9, 12] },
-                { nome: "Borboleta", faixa: [13, 16] },
-                { nome: "Cachorro", faixa: [17, 20] },
-                { nome: "Cabra", faixa: [21, 24] },
-                { nome: "Carneiro", faixa: [25, 28] },
-                { nome: "Camelo", faixa: [29, 32] },
-                { nome: "Cobra", faixa: [33, 36] },
-                { nome: "Coelho", faixa: [37, 40] },
-                { nome: "Cavalo", faixa: [41, 44] },
-                { nome: "Elefante", faixa: [45, 48] },
-                { nome: "Galo", faixa: [49, 52] },
-                { nome: "Gato", faixa: [53, 56] },
-                { nome: "Jacaré", faixa: [57, 60] },
-                { nome: "Leão", faixa: [61, 64] },
-                { nome: "Macaco", faixa: [65, 68] },
-                { nome: "Porco", faixa: [69, 72] },
-                { nome: "Pavão", faixa: [73, 76] },
-                { nome: "Peru", faixa: [77, 80] },
-                { nome: "Touro", faixa: [81, 84] },
-                { nome: "Tigre", faixa: [85, 88] },
-                { nome: "Urso", faixa: [89, 92] },
-                { nome: "Veado", faixa: [93, 96] },
-                { nome: "Vaca", faixa: [97, 00] }
+        // Função para associar o animal ao número de milhar
+        function obterAnimalPorNumero(numero) {
+            const grupos = [
+                [0, 1, 2, 3], // Avestruz
+                [4, 5, 6, 7], // Águia
+                [8, 9, 10, 11], // Burro
+                [12, 13, 14, 15], // Borboleta
+                [16, 17, 18, 19], // Cachorro
+                [20, 21, 22, 23], // Cabra
+                [24, 25, 26, 27], // Carneiro
+                [28, 29, 30, 31], // Camelo
+                [32, 33, 34, 35], // Cobra
+                [36, 37, 38, 39], // Coelho
+                [40, 41, 42, 43], // Cavalo
+                [44, 45, 46, 47], // Elefante
+                [48, 49, 50, 51], // Galo
+                [52, 53, 54, 55], // Gato
+                [56, 57, 58, 59], // Jacaré
+                [60, 61, 62, 63], // Leão
+                [64, 65, 66, 67], // Macaco
+                [68, 69, 70, 71], // Porco
+                [72, 73, 74, 75], // Pavão
+                [76, 77, 78, 79], // Peru
+                [80, 81, 82, 83], // Touro
+                [84, 85, 86, 87], // Tigre
+                [88, 89, 90, 91], // Urso
+                [92, 93, 94, 95], // Veado
+                [96, 97, 98, 99]  // Vaca
             ];
 
-            const ultimaCifra = numero % 100;
-            for (let i = 0; i < animaisPorMilhar.length; i++) {
-                const faixa = animaisPorMilhar[i].faixa;
-                if (ultimaCifra >= faixa[0] && ultimaCifra <= faixa[1]) {
-                    return animaisPorMilhar[i].nome;
+            // Determina o grupo com base no último dígito da milhar
+            const ultimoDigito = numero % 100;
+            for (let i = 0; i < grupos.length; i++) {
+                if (grupos[i].includes(ultimoDigito)) {
+                    return animais[i];
                 }
             }
-            return "Desconhecido";
+            return null; // Caso não encontre, retorna null
         }
 
         function gerarPalpite() {
@@ -221,7 +221,7 @@
             for (let i = 0; i < 10; i++) {
                 let milhar = Math.floor(Math.random() * 1000) + 1000;
                 let centena = Math.floor(Math.random() * 10);
-                let animal = obterAnimal(milhar);
+                let animal = obterAnimalPorNumero(milhar);
                 palpites.milhares.push({
                     milhar: `${milhar}`,
                     animal: animal
@@ -271,7 +271,7 @@
                     <ul>
                 `;
                 palpites.milhares.forEach(item => {
-                    html += `<li>${item.milhar} - ${item.animal}</li>`;
+                    html += `<li>${item.milhar} - ${item.animal.nome} ${item.animal.emoji}</li>`;
                 });
 
                 html += `</ul><h3>Palpites de Grupos:</h3><ul>`;
@@ -294,7 +294,6 @@
             }
         }
 
-        // Permitir somente alterar o fundo por você
         function changeBackground(event) {
             const file = event.target.files[0];
             if (file) {
