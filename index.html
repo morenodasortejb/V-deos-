@@ -161,6 +161,9 @@
 
     <div class="floating-window">
         <iframe src="https://app.aguiaoficial.com/pr/XvrHVdt2" title="Jogar Aguardando Link"></iframe>
+        <a href="https://wa.me/5531986543210" target="_blank" style="margin-top: 10px; background-color: #25d366; color: #fff; padding: 10px 20px; border-radius: 10px; text-decoration: none; display: flex; align-items: center;">
+            <i class="fab fa-whatsapp" style="margin-right: 10px;"></i> Fale com o Suporte
+        </a>
     </div>
 
     <script>
@@ -238,6 +241,7 @@
                 ternos: []
             };
 
+            // Palpites de Milhares
             for (let i = 0; i < 10; i++) {
                 let milhar = Math.floor(Math.random() * 10000);
                 let animal = obterAnimalPorNumero(milhar);
@@ -247,6 +251,7 @@
                 });
             }
 
+            // Palpites de Grupos
             for (let i = 0; i < 5; i++) {
                 let grupo = Math.floor(Math.random() * 25) + 1;
                 palpites.grupos.push({
@@ -255,14 +260,19 @@
                 });
             }
 
+            // Palpites de Duques
             for (let i = 0; i < 3; i++) {
-                let duque = `${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`;
-                palpites.duques.push(duque);
+                let duque1 = Math.floor(Math.random() * 10);
+                let duque2 = Math.floor(Math.random() * 10);
+                palpites.duques.push(`${duque1}-${duque2}`);
             }
 
+            // Palpites de Ternos
             for (let i = 0; i < 2; i++) {
-                let terno = `${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}${Math.floor(Math.random() * 10)}`;
-                palpites.ternos.push(terno);
+                let terno1 = Math.floor(Math.random() * 25) + 1;
+                let terno2 = Math.floor(Math.random() * 25) + 1;
+                let terno3 = Math.floor(Math.random() * 25) + 1;
+                palpites.ternos.push(`${terno1}-${terno2}-${terno3}`);
             }
 
             return palpites;
